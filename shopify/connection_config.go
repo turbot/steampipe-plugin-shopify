@@ -21,7 +21,7 @@ var ConfigSchema = map[string]*schema.Attribute{
 	},
 	"shopName": {
 		Type: schema.TypeString,
-	}
+	},
 }
 
 func ConfigInstance() interface{} {
@@ -37,7 +37,7 @@ func GetConfig(connection *plugin.Connection) shopifyConfig {
 	return config
 }
 
-func connect(_ context.Context, d *plugin.QueryData) (*shopifyapi.Client, error) {
+func connect(_ context.Context, d *plugin.QueryData) (*goshopify.Client, error) {
 	shopifyConfig := GetConfig(d.Connection)
 
 	// Default to env var settings
@@ -60,7 +60,7 @@ func connect(_ context.Context, d *plugin.QueryData) (*shopifyapi.Client, error)
 		return nil, errors.New("'shop_name' must be set in the connection configuration. Edit your connection configuration file and then restart Steampipe")
 	}
 
-	client := goshopify.NewClient(goshopify.App{}, shopifyConfig.shopName, token)
+	client := goshopify.NewClient(goshopify.App{}, *shopifyConfig.shopName, token)
 
 	return client, nil
 }
