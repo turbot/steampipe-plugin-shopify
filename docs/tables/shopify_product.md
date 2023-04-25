@@ -17,18 +17,18 @@ from
   shopify_product;
 ```
 
-###  List products with particular product type
+###  Count the number of products of a particular type 
 
 ```sql
 select
-  id,
-  title,
   product_type,
-  created_at
+  count(*) as product_count
 from
   shopify_product
 where
-  product_type = 'snowboard';
+  product_type = 'snowboard'
+group by 
+  product_type;
 ```
 
 ### List products with particular tags
@@ -44,7 +44,7 @@ where
   tags like '%Premium%';
 ```
 
-### List the product created within 30 days
+### List the products created within last 30 days
 
 ```sql
 select
@@ -59,7 +59,7 @@ order by
   created_at;
 ```
 
-### List Products with archive status
+### List archived products
 
 ```sql
 select
@@ -72,14 +72,14 @@ where
   status = 'archived';
 ```
 
-### List the product variants with inventory quantity less than 20 
+### List the product variants with quantities less than 20 
 
 ```sql
 select
   id as product_id,
   title as product_title,
-  v -> 'inventory_quantity' as variant_inventory_quantity,
   v -> 'inventory_item_id' as variant_inventory_item_id,
+  v -> 'inventory_quantity' as variant_inventory_quantity
 from
   shopify_product,
   jsonb_array_elements(variants) as v
@@ -87,13 +87,14 @@ where
   (v ->> 'inventory_quantity')::integer < 20;
 ```
 
-### List the product variants which requires shipping
+### List the product variants which require shipping
 
 ```sql
 select
   id as product_id,
   title as product_title,
-  v -> 'inventory_item_id' as variant_inventory_item_id
+  v -> 'inventory_item_id' as variant_inventory_item_id,
+  v ->> 'requires_shipping' as requires_shipping
 from
   shopify_product,
   jsonb_array_elements(variants) as v
@@ -107,7 +108,8 @@ where
 select
   id as product_id,
   title as product_title,
-  v -> 'inventory_item_id' as variant_inventory_item_id
+  v -> 'inventory_item_id' as variant_inventory_item_id,
+  v ->> 'taxable' as taxable
 from
   shopify_product,
   jsonb_array_elements(variants) as v
