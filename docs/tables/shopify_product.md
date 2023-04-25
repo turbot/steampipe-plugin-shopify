@@ -58,3 +58,59 @@ where
 order by
   created_at;
 ```
+
+### List Products with archive status
+
+```sql
+select
+  id,
+  title,
+  created_at
+from
+  shopify_product
+where
+  status = 'archived';
+```
+
+### List the product variants with inventory quantity less than 20 
+
+```sql
+select
+  id as product_id,
+  title as product_title,
+  v -> 'inventory_quantity' as variant_inventory_quantity,
+  v -> 'inventory_item_id' as variant_inventory_item_id,
+from
+  shopify_product,
+  jsonb_array_elements(variants) as v
+where 
+  (v ->> 'inventory_quantity')::integer < 20;
+```
+
+### List the product variants which requires shipping
+
+```sql
+select
+  id as product_id,
+  title as product_title,
+  v -> 'inventory_item_id' as variant_inventory_item_id
+from
+  shopify_product,
+  jsonb_array_elements(variants) as v
+where 
+  (v ->> 'requires_shipping')::boolean;
+```
+
+## List the product variants which are taxable
+
+```sql
+select
+  id as product_id,
+  title as product_title,
+  v -> 'inventory_item_id' as variant_inventory_item_id
+from
+  shopify_product,
+  jsonb_array_elements(variants) as v
+where 
+  (v ->> 'taxable')::boolean;
+```

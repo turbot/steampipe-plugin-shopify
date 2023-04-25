@@ -69,9 +69,19 @@ func tableShopifyProduct(ctx context.Context) *plugin.Table {
 				Description: "The product publish time.",
 			},
 			{
+				Name:        "published_scope",
+				Type:        proto.ColumnType_STRING,
+				Description: "The product publish scope.",
+			},
+			{
 				Name:        "tags",
 				Type:        proto.ColumnType_STRING,
 				Description: "The product tags.",
+			},
+			{
+				Name:        "status",
+				Type:        proto.ColumnType_STRING,
+				Description: "The product status.",
 			},
 			{
 				Name:        "options",
@@ -84,9 +94,40 @@ func tableShopifyProduct(ctx context.Context) *plugin.Table {
 				Description: "The product variants.",
 			},
 			{
+				Name:        "image",
+				Type:        proto.ColumnType_JSON,
+				Description: "The product image.",
+			},
+			{
 				Name:        "images",
 				Type:        proto.ColumnType_JSON,
-				Description: "The product images.",
+				Description: "List of images associated with the product.",
+			},
+			{
+				Name:        "template_suffix",
+				Type:        proto.ColumnType_STRING,
+				Description: "The product template suffix.",
+			},
+			{
+				Name:        "metafields_global_title_tag",
+				Type:        proto.ColumnType_STRING,
+				Description: "The product metafields global title tag.",
+			},
+			{
+				Name:        "metafields_global_description_tag",
+				Type:        proto.ColumnType_STRING,
+				Description: "The product metafields global description tag.",
+			},
+			{
+				Name:        "metafields",
+				Type:        proto.ColumnType_JSON,
+				Description: "The product metafields.",
+			},
+			{
+				Name:        "admin_graphql_api_id",
+				Type:        proto.ColumnType_STRING,
+				Description: "The admin graphql api id.",
+				Transform:   transform.FromField("AdminGraphqlAPIID"),
 			},
 		},
 	}
@@ -99,9 +140,7 @@ func listProducts(ctx context.Context, d *plugin.QueryData, _ *plugin.HydrateDat
 		return nil, err
 	}
 
-	options := goshopify.ListOptions{
-		Limit: 100000,
-	}
+	options := goshopify.ListOptions{}
 
 	for {
 		products, paginator, err := conn.Product.ListWithPagination(options)
