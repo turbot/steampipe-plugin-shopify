@@ -15,10 +15,10 @@ func tableShopifyProduct(ctx context.Context) *plugin.Table {
 		Description: "Shopify Products are the goods, digital downloads, services, and gift cards that are sold in Shopify.",
 		Get: &plugin.GetConfig{
 			KeyColumns: plugin.SingleColumn("id"),
-			Hydrate:    getProducts,
+			Hydrate:    getProduct,
 		},
 		List: &plugin.ListConfig{
-			Hydrate: listProducts,
+			Hydrate: listProduct,
 		},
 		Columns: []*plugin.Column{
 			{
@@ -133,7 +133,7 @@ func tableShopifyProduct(ctx context.Context) *plugin.Table {
 	}
 }
 
-func listProducts(ctx context.Context, d *plugin.QueryData, _ *plugin.HydrateData) (interface{}, error) {
+func listProduct(ctx context.Context, d *plugin.QueryData, _ *plugin.HydrateData) (interface{}, error) {
 	conn, err := connect(ctx, d)
 	if err != nil {
 		plugin.Logger(ctx).Error("listProduct", "connection_error", err)
@@ -154,7 +154,7 @@ func listProducts(ctx context.Context, d *plugin.QueryData, _ *plugin.HydrateDat
 	for {
 		products, paginator, err := conn.Product.ListWithPagination(options)
 		if err != nil {
-			plugin.Logger(ctx).Error("listProductsError", "list_api_error", err)
+			plugin.Logger(ctx).Error("listProductError", "list_api_error", err)
 			return nil, err
 		}
 
@@ -173,7 +173,7 @@ func listProducts(ctx context.Context, d *plugin.QueryData, _ *plugin.HydrateDat
 	}
 }
 
-func getProducts(ctx context.Context, d *plugin.QueryData, h *plugin.HydrateData) (interface{}, error) {
+func getProduct(ctx context.Context, d *plugin.QueryData, h *plugin.HydrateData) (interface{}, error) {
 	conn, err := connect(ctx, d)
 	if err != nil {
 		plugin.Logger(ctx).Error("getProduct", "connection_error", err)
