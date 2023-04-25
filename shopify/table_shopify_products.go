@@ -140,7 +140,16 @@ func listProducts(ctx context.Context, d *plugin.QueryData, _ *plugin.HydrateDat
 		return nil, err
 	}
 
+	// max limit defined by the api is 250
 	options := goshopify.ListOptions{}
+
+	// set the limit if a lower limit is passed in query context
+	limit := d.QueryContext.Limit
+	if limit != nil {
+		if *limit < 250 {
+			options.Limit = int(*limit)
+		}
+	}
 
 	for {
 		products, paginator, err := conn.Product.ListWithPagination(options)
