@@ -36,7 +36,7 @@ select
 from
   shopify_custom_collection
 where
-  published=true;
+  published = true;
 ```
 
 ### Retrieve the custom collection details with a specific ID
@@ -50,7 +50,7 @@ select
 from
   shopify_custom_collection
 where
-  id=444300460327;
+  id = 444300460327;
 ```
 
 ### Retrieve the custom collection with a specific handle
@@ -64,7 +64,7 @@ select
 from
   shopify_custom_collection
 where
-  handle='jelly';
+  handle = 'jelly';
 ```
 
 ### Retrieve all custom collections updated after a specific date
@@ -79,7 +79,7 @@ select
 from 
   shopify_custom_collection
 where 
-  updated_at>'2023-01-01';
+  updated_at > '2023-01-01';
 ```
 
 ### Retrieve the number of custom collections published in a specific month
@@ -92,7 +92,7 @@ from
 where
   published=true
 and 
-  date_trunc('month', published_at)='2023-04-01';
+  date_trunc('month', published_at) = '2023-04-01';
 ```
 
 ### Retrieve all custom collections that contain a specific metafield key
@@ -108,5 +108,5 @@ select
 from
   shopify_custom_collection
 where 
-  metafields@>'[{"key": "description_tag"}]';
+  metafields @> '[{"key": "description_tag"}]';
 ```
