@@ -83,7 +83,8 @@ func tableShopifyCustomCollection(ctx context.Context) *plugin.Table {
 				Name:        "metafields",
 				Type:        proto.ColumnType_JSON,
 				Hydrate:     listCustomCollectionMetafields,
-				Description: "Custom collection metadata.",
+				Transform:   transform.FromValue(),
+				Description: "Custom collection metafields.",
 			},
 		},
 	}
