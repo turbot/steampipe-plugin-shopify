@@ -121,6 +121,8 @@ func tableShopifyProduct(ctx context.Context) *plugin.Table {
 			{
 				Name:        "metafields",
 				Type:        proto.ColumnType_JSON,
+				Hydrate:     listProductMetafields,
+				Transform:   transform.FromValue(),
 				Description: "The product metafields.",
 			},
 			{
@@ -192,4 +194,22 @@ func getProduct(ctx context.Context, d *plugin.QueryData, h *plugin.HydrateData)
 	}
 
 	return result, nil
+}
+
+func listProductMetafields(ctx context.Context, d *plugin.QueryData, h *plugin.HydrateData) (interface{}, error) {
+	id := h.Item.(goshopify.Product).ID
+
+	conn, err := connect(ctx, d)
+	if err != nil {
+		plugin.Logger(ctx).Error("listProductMetafields", "connection_error", err)
+		return nil, err
+	}
+
+	meta, err := conn.Product.ListMetafields(id, nil)
+	if err != nil {
+		plugin.Logger(ctx).Error("listProductMetafields", "list_api_error", err)
+		return nil, err
+	}
+
+	return meta, nil
 }
