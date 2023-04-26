@@ -25,13 +25,13 @@ select
   id,
   name,
   email,
-  shipping_address->>'zip' AS zip_code,
+  shipping_address ->> 'zip' as zip_code,
   fulfillment_status
 from 
   shopify_order
 where 
   fulfillment_status = 'fulfilled' and 
-  shipping_address->>'zip' = '712136';
+  shipping_address ->> 'zip' = '712136';
 ```
 
 ### List the total price of each order where at least one item has a price greater than $100
@@ -72,7 +72,7 @@ select
 from 
   shopify_order
 where 
-  customer->>'email' LIKE '%@gmail.com';
+  customer->>'email' like '%@gmail.com';
 ```
 
 ### List the orders cancelled within last 30 days
@@ -161,4 +161,35 @@ from
   shopify_order
 where
   gateway = 'manual';
+```
+
+### Get the tax details of the products ordered
+
+```sql
+select 
+  id as order_id,
+  name as order_name,
+  email,
+  item ->> 'product_id' as product_id,
+  item ->> 'price' as product_price,
+  jsonb_array_elements(item -> 'tax_lines') ->> 'rate' as tax_rate,
+  jsonb_array_elements(item -> 'tax_lines') ->> 'title' as tax_type,
+  jsonb_array_elements(item -> 'tax_lines') ->> 'price' as tax_price
+from 
+  shopify_order,
+  jsonb_array_elements(line_items) as item;
+```
+
+### List the orders with discounts
+
+```sql
+select 
+  id,
+  name,
+  email,
+  total_discounts
+from 
+  shopify_order
+where
+  total_discounts > 0;
 ```
