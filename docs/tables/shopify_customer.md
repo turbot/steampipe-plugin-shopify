@@ -31,7 +31,7 @@ select
 from
   shopify_customer
 where
-  email='russel.winfield@example.com';
+  email = 'russel.winfield@example.com';
 ```
 
 ### Get the latest order details of a customer
@@ -47,7 +47,7 @@ select
 from
   shopify_customer
 where
-  email='russel.winfield@example.com';
+  email = 'russel.winfield@example.com';
 ```
 
 ### Get the details of the customer who spent the most
@@ -81,7 +81,7 @@ select
 from
   shopify_customer
 where
-  email='russel.winfield@example.com';
+  email = 'russel.winfield@example.com';
 ```
 
 ### Get all the given addresses for a customer
@@ -94,7 +94,7 @@ select
 from
   shopify_customer
 where
-  email='russel.winfield@example.com';
+  email = 'russel.winfield@example.com';
 ```
 
 ### List customers with unverified emails
@@ -108,7 +108,7 @@ select
 from
   shopify_customer
 where
-  verified_email=false;
+  not verified_email;
 ```
 
 ### List customers who opted-in for email marketing.
@@ -124,7 +124,7 @@ select
 from
   shopify_customer
 where
-  accepts_marketing=true;
+  accepts_marketing;
 ```
 
 ### List tax exempted customers
@@ -140,7 +140,7 @@ select
 from
   shopify_customer
 where
-  tax_exempt=true;
+  tax_exempt;
 ```
 
 ### List disabled customers
@@ -156,7 +156,7 @@ select
 from
   shopify_customer
 where
-  state='disabled';
+  state = 'disabled';
 ```
 
 ### List customers created within the last 30days
