@@ -280,85 +280,80 @@ func tableShopifyOrder(ctx context.Context) *plugin.Table {
 				Description: "The user id of the users who placed the order.",
 			},
 			{
-				Name: "order_status_url",
-				Type: proto.ColumnType_STRING,
+				Name:        "order_status_url",
+				Type:        proto.ColumnType_STRING,
 				Description: "The URL to check the status of the order.",
-				},
-				{
-				Name: "gateway",
-				Type: proto.ColumnType_STRING,
+			},
+			{
+				Name:        "gateway",
+				Type:        proto.ColumnType_STRING,
 				Description: "The payment gateway used for the orders.",
-				},
-				{
-				Name: "confirmed",
-				Type: proto.ColumnType_BOOL,
+			},
+			{
+				Name:        "confirmed",
+				Type:        proto.ColumnType_BOOL,
 				Description: "Whether or not the order has been confirmed.",
-				},
-				{
-				Name: "total_price_usd",
-				Type: proto.ColumnType_JSON,
+			},
+			{
+				Name:        "total_price_usd",
+				Type:        proto.ColumnType_JSON,
 				Description: "The total price of the order in USD.",
-				},
-				{
-				Name: "checkout_token",
-				Type: proto.ColumnType_STRING,
+			},
+			{
+				Name:        "checkout_token",
+				Type:        proto.ColumnType_STRING,
 				Description: "The token for the checkout process.",
-				},
-				{
-				Name: "reference",
-				Type: proto.ColumnType_STRING,
+			},
+			{
+				Name:        "reference",
+				Type:        proto.ColumnType_STRING,
 				Description: "The reference number for the order.",
-				},
-				{
-				Name: "source_identifier",
-				Type: proto.ColumnType_STRING,
+			},
+			{
+				Name:        "source_identifier",
+				Type:        proto.ColumnType_STRING,
 				Description: "The source identifier of the order.",
-				},
-				{
-				Name: "source_url",
-				Type: proto.ColumnType_STRING,
+			},
+			{
+				Name:        "source_url",
+				Type:        proto.ColumnType_STRING,
 				Description: "The source URL of the order.",
-				},
-				{
-				Name: "device_id",
-				Type: proto.ColumnType_INT,
+			},
+			{
+				Name:        "device_id",
+				Type:        proto.ColumnType_INT,
 				Description: "The ID of the device used to place the order.",
-				},
-				{
-				Name: "phone",
-				Type: proto.ColumnType_STRING,
+			},
+			{
+				Name:        "phone",
+				Type:        proto.ColumnType_STRING,
 				Description: "The phone number associated with the order.",
-				},
-				{
-				Name: "landing_site_ref",
-				Type: proto.ColumnType_STRING,
+			},
+			{
+				Name:        "landing_site_ref",
+				Type:        proto.ColumnType_STRING,
 				Description: "The reference number for the landing site of the order.",
-				},
-				{
-				Name: "checkout_id",
-				Type: proto.ColumnType_INT,
+			},
+			{
+				Name:        "checkout_id",
+				Type:        proto.ColumnType_INT,
 				Description: "The ID of the checkout associated with the order.",
-				},
-				{
-				Name: "contact_email",
-				Type: proto.ColumnType_STRING,
+			},
+			{
+				Name:        "contact_email",
+				Type:        proto.ColumnType_STRING,
 				Description: "The email address associated with the order.",
-				},
-				{
-				Name: "metafields",
-				Type: proto.ColumnType_JSON,
-				Description: "The metafields associated with the order.",
-				},
-				{
-				Name: "send_receipt",
-				Type: proto.ColumnType_BOOL,
+			},
+			{
+				Name:        "send_receipt",
+				Type:        proto.ColumnType_BOOL,
 				Description: "Whether or not a receipt was sent for the order.",
-				},
-				{
-				Name: "send_fulfillment_receipt",
-				Type: proto.ColumnType_BOOL,
+			},
+			{
+				Name:        "send_fulfillment_receipt",
+				Type:        proto.ColumnType_BOOL,
 				Description: "Whether or not a fulfillment receipt was sent for the order.",
-				},	
+			},
 		},
 	}
 }
