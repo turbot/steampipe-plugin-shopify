@@ -16,20 +16,17 @@ from
   shopify_smart_collection;
 ```
 
-### Get the top 10 smart collections with the most rules
+### Get the number of rules for each smart collection
 
 ```sql
-select 
+select
   id,
   title,
   handle,
   updated_at,
   jsonb_array_length(rules) as num_rules
-from 
-  shopify_smart_collection
-order by 
-  num_rules DESC
-limit 10;
+from
+  shopify_smart_collection;
 ```
 
 ### Get the total number of published smart collections
