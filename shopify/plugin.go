@@ -19,7 +19,9 @@ func Plugin(ctx context.Context) *plugin.Plugin {
 			NewInstance: ConfigInstance,
 			Schema:      ConfigSchema,
 		},
-		TableMap: map[string]*plugin.Table{},
+		TableMap: map[string]*plugin.Table{
+			"shopify_draft_order": tableShopifyDraftOrder(ctx),
+		},
 	}
 	return p
 }
