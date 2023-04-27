@@ -89,11 +89,6 @@ func tableShopifyProduct(ctx context.Context) *plugin.Table {
 				Description: "The product options.",
 			},
 			{
-				Name:        "variants",
-				Type:        proto.ColumnType_JSON,
-				Description: "The product variants.",
-			},
-			{
 				Name:        "image",
 				Type:        proto.ColumnType_JSON,
 				Description: "The product image.",

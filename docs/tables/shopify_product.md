@@ -76,43 +76,44 @@ where
 
 ```sql
 select
-  id as product_id,
-  title as product_title,
-  v -> 'inventory_item_id' as variant_inventory_item_id,
-  v -> 'inventory_quantity' as variant_inventory_quantity
+  p.id as product_id,
+  p.title as product_title,
+  v.inventory_item_id as variant_inventory_item_id,
+  v.inventory_quantity as variant_inventory_quantity
 from
-  shopify_product,
-  jsonb_array_elements(variants) as v
+  shopify_product as p,
+  shopify_product_variant as v
 where 
-  (v ->> 'inventory_quantity')::integer < 20;
+  v.inventory_quantity < 20;
 ```
 
 ### List the product variants which require shipping
 
 ```sql
 select
-  id as product_id,
-  title as product_title,
-  v -> 'inventory_item_id' as variant_inventory_item_id,
-  v ->> 'requires_shipping' as requires_shipping
+  p.id as product_id,
+  p.title as product_title,
+  v.inventory_item_id as variant_inventory_item_id,
+  v.requires_shipping as requires_shipping
 from
-  shopify_product,
-  jsonb_array_elements(variants) as v
+  shopify_product as p,
+  shopify_product_variant as v
 where 
-  (v ->> 'requires_shipping')::boolean;
+  v.requires_shipping;
 ```
 
 ## List the product variants which are taxable
 
 ```sql
 select
-  id as product_id,
-  title as product_title,
-  v -> 'inventory_item_id' as variant_inventory_item_id,
-  v ->> 'taxable' as taxable
+  p.id as product_id,
+  p.title as product_title,
+  v.inventory_item_id as variant_inventory_item_id,
+  v.taxable as taxable,
+  v.tax_code as tax_code
 from
-  shopify_product,
-  jsonb_array_elements(variants) as v
+  shopify_product as p,
+  shopify_product_variant as v
 where 
-  (v ->> 'taxable')::boolean;
+  v.taxable;
 ```
