@@ -47,7 +47,7 @@ select
 from
   shopify_collection_product
 where
-  collection_id = 444300460327;
+  collection_title = 'Jelly';
 ```
 
 ### Get the total count of products in each collection
