@@ -64,16 +64,15 @@ func tableShopifyProductVariant(ctx context.Context) *plugin.Table {
 				Name:        "price",
 				Type:        proto.ColumnType_DOUBLE,
 				Description: "The price of the product.",
-				Transform:   transform.FromField("Price").Transform(transform.ToString).Transform(transform.ToDouble),
+				Transform:   transform.FromField("Price").Transform(convertPrice),
 			},
 			// TODO: Transform not working for this field
-			// {
-			// 	Name:        "compare_at_price",
-			// 	Type:        proto.ColumnType_DOUBLE,
-			// 	Description: "The compare at price of the product.",
-			// 	// Transform:   transform.FromField("CompareAtPrice."),
-			// 	Transform: transform.FromField("CompareAtPrice").Transform(transform.ToString).Transform(transform.ToDouble),
-			// },
+			{
+				Name:        "compare_at_price",
+				Type:        proto.ColumnType_DOUBLE,
+				Description: "The compare at price of the product.",
+				Transform:   transform.FromField("CompareAtPrice").Transform(convertPrice),
+			},
 			{
 				Name:        "fulfillment_service",
 				Type:        proto.ColumnType_STRING,
