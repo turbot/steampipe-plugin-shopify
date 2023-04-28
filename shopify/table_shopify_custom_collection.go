@@ -99,7 +99,7 @@ func listCustomCollections(ctx context.Context, d *plugin.QueryData, _ *plugin.H
 
 	customCols, err := conn.CustomCollection.List(nil)
 	if err != nil {
-		plugin.Logger(ctx).Error("listCustomCollectionsError", "list_api_error", err)
+		plugin.Logger(ctx).Error("listCustomCollections", "list_api_error", err)
 		return nil, err
 	}
 
@@ -142,7 +142,7 @@ func listCustomCollectionMetafields(ctx context.Context, d *plugin.QueryData, h 
 
 	conn, err := connect(ctx, d)
 	if err != nil {
-		plugin.Logger(ctx).Error("listCustomCollections", "connection_error", err)
+		plugin.Logger(ctx).Error("listCustomCollectionMetafields", "connection_error", err)
 		return nil, err
 	}
 

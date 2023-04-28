@@ -1,13 +1,13 @@
 # Table: shopify_custom_collection
 
-Shopify Products are the goods, digital downloads, services, and gift cards that are sold in Shopify.
+Shopify custom collection is a group of products that a merchant can create to make their store easier to browse.
 
 ## Examples
 
 ### Basic info
 
 ```sql
-select 
+select
   id,
   title,
   handle,
@@ -21,18 +21,18 @@ from
 ```sql
 select
   count(*)
-from 
+from
   shopify_custom_collection;
 ```
 
 ### Retrieve all published custom collections
 
 ```sql
-select 
+select
   id,
   title,
   handle,
-  published 
+  published
 from
   shopify_custom_collection
 where
@@ -76,22 +76,22 @@ select
   handle,
   published,
   updated_at
-from 
+from
   shopify_custom_collection
-where 
+where
   updated_at > '2023-01-01';
 ```
 
 ### Retrieve the number of custom collections published in a specific month
 
 ```sql
-select 
-  count(*) 
-from 
+select
+  count(*)
+from
   shopify_custom_collection
 where
   published=true
-and 
+and
   date_trunc('month', published_at) = '2023-04-01';
 ```
 
@@ -107,6 +107,6 @@ select
   jsonb_pretty(metafields)
 from
   shopify_custom_collection
-where 
+where
   metafields @> '[{"key": "description_tag"}]';
 ```
