@@ -7,12 +7,12 @@ Shopify smart collection is a grouping of products defined by rules that are set
 ### Basic info
 
 ```sql
-select 
+select
   id,
   title,
   updated_at,
-  handle 
-from 
+  handle
+from
   shopify_smart_collection;
 ```
 
@@ -32,11 +32,11 @@ from
 ### Get the total number of published smart collections
 
 ```sql
-select 
+select
   count(*)
-from 
+from
   shopify_smart_collection
-where 
+where
   published;
 ```
 
@@ -60,15 +60,15 @@ order by
 ### Get the IDs, titles, and image URLs of all custom collections that have an image
 
 ```sql
-select 
+select
   id,
   title,
   updated_at,
   handle,
-  image ->> 'src' as image_url 
-from 
-  shopify_smart_collection 
-where 
+  image ->> 'src' as image_url
+from
+  shopify_smart_collection
+where
   image ->> 'src' is not null;
 ```
 
@@ -84,6 +84,6 @@ select
   metafields
 from
   shopify_smart_collection
-where 
+where
   metafields @> '[{"value": "hello test 123"}]';
 ```

@@ -26,75 +26,75 @@ func tableShopifySmartCollection(ctx context.Context) *plugin.Table {
 				Type:        proto.ColumnType_INT,
 				Description: "The ID of the smart collection.",
 				Transform:   transform.FromField("ID"),
-		},
-		{
+			},
+			{
 				Name:        "title",
 				Type:        proto.ColumnType_STRING,
 				Description: "Title of the smart collection.",
-		},
-		{
+			},
+			{
 				Name:        "handle",
 				Type:        proto.ColumnType_STRING,
 				Description: "The handle of the smart collection",
-		},
-		{
+			},
+			{
 				Name:        "updated_at",
 				Type:        proto.ColumnType_TIMESTAMP,
 				Description: "Time when the smart collection was last updated.",
-		},
-		{
+			},
+			{
 				Name:        "body_html",
 				Type:        proto.ColumnType_STRING,
 				Transform:   transform.FromField("BodyHTML"),
 				Description: "Body HTML of the smart collection.",
-		},
-		{
+			},
+			{
 				Name:        "sort_order",
 				Type:        proto.ColumnType_STRING,
 				Description: "A specific sort order for the smart collection.",
-		},
-		{
+			},
+			{
 				Name:        "template_suffix",
 				Type:        proto.ColumnType_STRING,
 				Description: "The template suffix of the smart collection.",
-		},
-		{
+			},
+			{
 				Name:        "image",
 				Type:        proto.ColumnType_JSON,
 				Description: "The image of the smart collection.",
-		},
-		{
+			},
+			{
 				Name:        "published",
 				Type:        proto.ColumnType_BOOL,
 				Description: "Whether the smart collection is published or not.",
-		},
-		{
+			},
+			{
 				Name:        "published_at",
 				Type:        proto.ColumnType_TIMESTAMP,
 				Description: "The time when the smart collection was published.",
-		},
-		{
+			},
+			{
 				Name:        "published_scope",
 				Type:        proto.ColumnType_STRING,
 				Description: "Scope of the published smart collection.",
-		},
-		{
+			},
+			{
 				Name:        "rules",
 				Type:        proto.ColumnType_JSON,
 				Description: "Smart collection rules.",
-		},
-		{
+			},
+			{
 				Name:        "disjunctive",
 				Type:        proto.ColumnType_BOOL,
 				Description: "Whether the smart collection is disjunctive or not.",
-		},
-		{
+			},
+			{
 				Name:        "metafields",
 				Type:        proto.ColumnType_JSON,
 				Hydrate:     listSmartCollectionMetafields,
 				Transform:   transform.FromValue(),
 				Description: "Smart collection metafields.",
-		},		
+			},
 		},
 	}
 }
@@ -108,7 +108,7 @@ func listSmartCollection(ctx context.Context, d *plugin.QueryData, _ *plugin.Hyd
 
 	smartCols, err := conn.SmartCollection.List(nil)
 	if err != nil {
-		plugin.Logger(ctx).Error("listSmartCollectionError", "list_api_error", err)
+		plugin.Logger(ctx).Error("listSmartCollection", "list_api_error", err)
 		return nil, err
 	}
 
@@ -151,13 +151,13 @@ func listSmartCollectionMetafields(ctx context.Context, d *plugin.QueryData, h *
 
 	conn, err := connect(ctx, d)
 	if err != nil {
-		plugin.Logger(ctx).Error("listSmartCollection", "connection_error", err)
+		plugin.Logger(ctx).Error("listSmartCollectionMetafields", "connection_error", err)
 		return nil, err
 	}
 
 	meta, err := conn.SmartCollection.ListMetafields(id, nil)
 	if err != nil {
-		plugin.Logger(ctx).Error("listSmartCollectionMetafieldsError", "list_api_error", err)
+		plugin.Logger(ctx).Error("listSmartCollectionMetafields", "list_api_error", err)
 		return nil, err
 	}
 
