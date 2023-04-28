@@ -81,7 +81,7 @@ select
 from
   shopify_product as p,
   shopify_product_variant as v
-where 
+where
   v.inventory_quantity < 20;
 ```
 
@@ -96,7 +96,7 @@ select
 from
   shopify_product as p,
   shopify_product_variant as v
-where 
+where
   v.requires_shipping;
 ```
 
@@ -112,7 +112,7 @@ select
 from
   shopify_product as p,
   shopify_product_variant as v
-where 
+where
   v.taxable;
 ```
 
