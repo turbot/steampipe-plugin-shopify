@@ -1,6 +1,6 @@
 ---
 organization: Turbot
-category: ["e-commerce platform"]
+category: ["internet"]
 icon_url: "/images/plugins/turbot/shopify.svg"
 brand_color: "#6BBF4E"
 display_name: "Shopify"
