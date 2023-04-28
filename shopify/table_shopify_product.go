@@ -51,12 +51,12 @@ func tableShopifyProduct(ctx context.Context) *plugin.Table {
 			{
 				Name:        "handle",
 				Type:        proto.ColumnType_STRING,
-				Description: "The the unique URL for the product page.",
+				Description: "The unique URL for the product page.",
 			},
 			{
 				Name:        "created_at",
 				Type:        proto.ColumnType_TIMESTAMP,
-				Description: "The date and time when the product was created",
+				Description: "The date and time when the product was created.",
 			},
 			{
 				Name:        "updated_at",

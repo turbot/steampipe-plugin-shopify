@@ -17,7 +17,7 @@ from
   shopify_product;
 ```
 
-###  Count how many items of a specific type are there
+### Count how many items of a specific type are there
 
 ```sql
 select
@@ -25,13 +25,11 @@ select
   count(*) as product_count
 from
   shopify_product
-where
-  product_type = 'snowboard'
 group by 
   product_type;
 ```
 
-### List products with specific tag
+### List products with a specific tag
 
 ```sql
 select
@@ -116,4 +114,31 @@ from
   shopify_product_variant as v
 where 
   v.taxable;
+```
+
+### Get the best selling product
+
+```sql
+select
+  p.id,
+  p.title,
+  p.product_type,
+  p.created_at,
+  p.vendor
+  q.c as sales_count
+from
+  shopify_product as p
+  join (
+    select
+      item ->> 'product_id' as id,
+      count(*) as c
+    from
+      shopify_order,
+      jsonb_array_elements(line_items) as item
+    group by
+      item ->> 'product_id'
+    order by
+      c desc
+    limit 1
+  ) as q on p.id = q.id::bigint;
 ```
