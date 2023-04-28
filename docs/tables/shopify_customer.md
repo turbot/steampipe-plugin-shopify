@@ -84,7 +84,7 @@ where
   email = 'russel.winfield@example.com';
 ```
 
-### Get all the given addresses for a customer
+### Get all the addresses for a customer
 
 ```sql
 select
@@ -159,7 +159,7 @@ where
   state = 'disabled';
 ```
 
-### List customers created within the last 30days
+### List customers created within the last 30 days
 
 ```sql
 select
@@ -176,4 +176,3 @@ where
 order by
   created_at;
 ```
-

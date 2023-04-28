@@ -12,7 +12,7 @@ import (
 func tableShopifyCustomer(ctx context.Context) *plugin.Table {
 	return &plugin.Table{
 		Name:        "shopify_customer",
-		Description: "Shopify Customer stores information about a shop's customers, such as their contact details, their order history, and whether they've agreed to receive email marketing.",
+		Description: "Shopify customer stores information about a shop's customers, such as their contact details, their order history, and whether they've agreed to receive email marketing.",
 		Get: &plugin.GetConfig{
 			KeyColumns: plugin.SingleColumn("id"),
 			Hydrate:    getCustomers,
@@ -24,7 +24,7 @@ func tableShopifyCustomer(ctx context.Context) *plugin.Table {
 			{
 				Name:        "id",
 				Type:        proto.ColumnType_INT,
-				Description: "The ID of the order.",
+				Description: "The customer ID.",
 				Transform:   transform.FromField("ID"),
 			},
 			{
@@ -101,7 +101,7 @@ func tableShopifyCustomer(ctx context.Context) *plugin.Table {
 			{
 				Name:        "accepts_marketing",
 				Type:        proto.ColumnType_BOOL,
-				Description: "Customer phone.",
+				Description: "Whether the customer subscribed to email marketing campaign.",
 			},
 			{
 				Name:        "default_address",
@@ -128,7 +128,7 @@ func tableShopifyCustomer(ctx context.Context) *plugin.Table {
 				Name:        "metafields",
 				Type:        proto.ColumnType_JSON,
 				Transform:   transform.FromJSONTag(),
-				Description: "Customer metadata.",
+				Description: "Customer metafields.",
 			},
 		},
 	}
@@ -180,15 +180,16 @@ func getCustomers(ctx context.Context, d *plugin.QueryData, h *plugin.HydrateDat
 		plugin.Logger(ctx).Error("getCustomer", "connection_error", err)
 		return nil, err
 	}
-	id := d.EqualsQuals["id"].GetInt64Value()
 
+	id := d.EqualsQuals["id"].GetInt64Value()
 	// check if the id is empty
 	if id == 0 {
 		return nil, nil
 	}
+
 	result, err := conn.Customer.Get(id, nil)
 	if err != nil {
-		plugin.Logger(ctx).Error("getCustomer", "api_error", err)
+		plugin.Logger(ctx).Error("getCustomer", "get_api_error", err)
 		return nil, err
 	}
 
