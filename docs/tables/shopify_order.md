@@ -21,31 +21,32 @@ from
 ### List all fulfilled orders shipped to a specific postal code
 
 ```sql
-select 
+select
   id,
   name,
   email,
   shipping_address ->> 'zip' as zip_code,
   fulfillment_status
-from 
+from
   shopify_order
-where 
-  fulfillment_status = 'fulfilled' and 
+where
+  fulfillment_status = 'fulfilled'
+  and
   shipping_address ->> 'zip' = '712136';
 ```
 
 ### List the total price of each order where at least one item has a price greater than $100
 
 ```sql
-select 
+select
   id,
   name,
   email,
   total_price
-from 
+from
   shopify_order,
-  jsonb_array_elements(line_items) as item 
-where 
+  jsonb_array_elements(line_items) as item
+where
   (item->>'price')::numeric > 100;
 ```
 
@@ -56,22 +57,22 @@ select
   id,
   name,
   email,
-  jsonb_array_length(line_items) as number_of_items 
-from 
+  jsonb_array_length(line_items) as number_of_items
+from
   shopify_order;
 ```
 
 ### List all orders where the customer's email belong to the domain "gmail.com"
 
 ```sql
-select 
+select
   id,
   name,
   email,
-  customer->>'name' as customer_name 
-from 
+  customer->>'name' as customer_name
+from
   shopify_order
-where 
+where
   customer->>'email' like '%@gmail.com';
 ```
 
@@ -103,7 +104,7 @@ select
 from
   shopify_order
 where
-  financial_status in('pending','partially_paid');
+  financial_status in ('pending','partially_paid');
 ```
 
 ### Get the order details of refunded orders
@@ -121,7 +122,7 @@ from
   jsonb_array_elements(refunds) as refund;
 ```
 
-### Retrieve the orders proccessed on a particular date
+### Get the orders processed on a particular date
 
 ```sql
 select
@@ -148,7 +149,8 @@ select
 from
   shopify_order
 where
-  fulfillment_status = 'fulfilled' and
+  fulfillment_status = 'fulfilled'
+  and
   not send_fulfillment_receipt;
 ```
 
@@ -166,7 +168,7 @@ where
 ### Get the tax details of the products ordered
 
 ```sql
-select 
+select
   id as order_id,
   name as order_name,
   email,
@@ -175,7 +177,7 @@ select
   jsonb_array_elements(item -> 'tax_lines') ->> 'rate' as tax_rate,
   jsonb_array_elements(item -> 'tax_lines') ->> 'title' as tax_type,
   jsonb_array_elements(item -> 'tax_lines') ->> 'price' as tax_price
-from 
+from
   shopify_order,
   jsonb_array_elements(line_items) as item;
 ```
@@ -183,12 +185,12 @@ from
 ### List the orders with discounts
 
 ```sql
-select 
+select
   id,
   name,
   email,
   total_discounts
-from 
+from
   shopify_order
 where
   total_discounts > 0;

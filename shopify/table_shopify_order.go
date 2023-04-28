@@ -12,10 +12,10 @@ import (
 func tableShopifyOrder(ctx context.Context) *plugin.Table {
 	return &plugin.Table{
 		Name:        "shopify_order",
-		Description: "Record orders that customers have made in the Shopify store.",
+		Description: "Shopify orders are records of purchases made by customers through a Shopify-powered online store, containing information such as products ordered, customer details, and transaction details.",
 		Get: &plugin.GetConfig{
 			KeyColumns: plugin.SingleColumn("id"),
-			Hydrate:    getorder,
+			Hydrate:    getOrder,
 		},
 		List: &plugin.ListConfig{
 			Hydrate: listOrders,
@@ -40,27 +40,27 @@ func tableShopifyOrder(ctx context.Context) *plugin.Table {
 			{
 				Name:        "created_at",
 				Type:        proto.ColumnType_TIMESTAMP,
-				Description: "The time order was placed.",
+				Description: "The time when the order was placed.",
 			},
 			{
 				Name:        "updated_at",
 				Type:        proto.ColumnType_TIMESTAMP,
-				Description: "The time order was updated.",
+				Description: "The time when the order was updated.",
 			},
 			{
 				Name:        "cancelled_at",
 				Type:        proto.ColumnType_TIMESTAMP,
-				Description: "The time order was cancelled.",
+				Description: "The time when the order was cancelled.",
 			},
 			{
 				Name:        "closed_at",
 				Type:        proto.ColumnType_TIMESTAMP,
-				Description: "The time order was closed.",
+				Description: "The time when the order was closed.",
 			},
 			{
 				Name:        "processed_at",
 				Type:        proto.ColumnType_TIMESTAMP,
-				Description: "The time order was processed.",
+				Description: "The time when the order was processed.",
 			},
 			{
 				Name:        "customer",
@@ -80,7 +80,7 @@ func tableShopifyOrder(ctx context.Context) *plugin.Table {
 			{
 				Name:        "currency",
 				Type:        proto.ColumnType_STRING,
-				Description: "The currency of the price of the order.",
+				Description: "The currency used for a particular order.",
 			},
 			{
 				Name:        "total_price",
@@ -161,7 +161,7 @@ func tableShopifyOrder(ctx context.Context) *plugin.Table {
 			{
 				Name:        "number",
 				Type:        proto.ColumnType_INT,
-				Description: "The  number of orders.",
+				Description: "The number of orders.",
 			},
 			{
 				Name:        "order_number",
@@ -186,22 +186,22 @@ func tableShopifyOrder(ctx context.Context) *plugin.Table {
 			{
 				Name:        "buyer_accepts_marketing",
 				Type:        proto.ColumnType_BOOL,
-				Description: "The buyer accepts order marketing or not.",
+				Description: "Whether the buyer accepts email marketing or not.",
 			},
 			{
 				Name:        "cancel_reason",
 				Type:        proto.ColumnType_STRING,
-				Description: "The buyer accepts order marketing or not.",
+				Description: "The reason for the order cancellation.",
 			},
 			{
 				Name:        "note_attributes",
 				Type:        proto.ColumnType_JSON,
-				Description: "The note attributes of the order.",
+				Description: "Any notes associated with the order.",
 			},
 			{
 				Name:        "discount_codes",
 				Type:        proto.ColumnType_JSON,
-				Description: "The discount codes of the order.",
+				Description: "Any discount codes applied to the order.",
 			},
 			{
 				Name:        "line_items",
@@ -221,13 +221,13 @@ func tableShopifyOrder(ctx context.Context) *plugin.Table {
 			{
 				Name:        "app_id",
 				Type:        proto.ColumnType_INT,
-				Description: "The app_id from which the order is placed.",
+				Description: "The ID of the app that created the order.",
 				Transform:   transform.FromField("AppID"),
 			},
 			{
 				Name:        "customer_locale",
 				Type:        proto.ColumnType_STRING,
-				Description: "The customer locale from which the order is placed.",
+				Description: "The locale associated with the customer.",
 			},
 			{
 				Name:        "landing_site",
@@ -237,7 +237,7 @@ func tableShopifyOrder(ctx context.Context) *plugin.Table {
 			{
 				Name:        "referring_site",
 				Type:        proto.ColumnType_STRING,
-				Description: "The rferring site of the order.",
+				Description: "The referring site of the order.",
 			},
 			{
 				Name:        "source_name",
@@ -257,22 +257,22 @@ func tableShopifyOrder(ctx context.Context) *plugin.Table {
 			{
 				Name:        "location_id",
 				Type:        proto.ColumnType_INT,
-				Description: "The location id of the orders.",
+				Description: "The location id of the order.",
 			},
 			{
 				Name:        "payment_gateway_names",
 				Type:        proto.ColumnType_JSON,
-				Description: "The payement gateway names of the orders.",
+				Description: "The payment gateway names associated with the order.",
 			},
 			{
 				Name:        "processing_method",
 				Type:        proto.ColumnType_STRING,
-				Description: "The payement gateway names of the orders.",
+				Description: "The processing method used for the order.",
 			},
 			{
 				Name:        "refunds",
 				Type:        proto.ColumnType_JSON,
-				Description: "The refunds on the orders.",
+				Description: "The refunds associated with the order.",
 			},
 			{
 				Name:        "user_id",
@@ -292,7 +292,7 @@ func tableShopifyOrder(ctx context.Context) *plugin.Table {
 			{
 				Name:        "confirmed",
 				Type:        proto.ColumnType_BOOL,
-				Description: "Whether or not the order has been confirmed.",
+				Description: "Whether the order has been confirmed.",
 			},
 			{
 				Name:        "total_price_usd",
@@ -366,7 +366,7 @@ func listOrders(ctx context.Context, d *plugin.QueryData, _ *plugin.HydrateData)
 	}
 
 	// max limit defined by the api is 250
-	// We are stting status to 'any' to get all the orders(open, closed, cancelled)
+	// We are setting status to 'any' to get all the orders(open, closed, cancelled)
 	options := goshopify.OrderListOptions{
 		ListOptions: goshopify.ListOptions{},
 		Status:      "any",
@@ -383,7 +383,7 @@ func listOrders(ctx context.Context, d *plugin.QueryData, _ *plugin.HydrateData)
 	for {
 		orders, paginator, err := conn.Order.ListWithPagination(options)
 		if err != nil {
-			plugin.Logger(ctx).Error("listOrderError", "list_api_error", err)
+			plugin.Logger(ctx).Error("listOrder", "list_api_error", err)
 			return nil, err
 		}
 
@@ -402,10 +402,10 @@ func listOrders(ctx context.Context, d *plugin.QueryData, _ *plugin.HydrateData)
 	}
 }
 
-func getorder(ctx context.Context, d *plugin.QueryData, h *plugin.HydrateData) (interface{}, error) {
+func getOrder(ctx context.Context, d *plugin.QueryData, h *plugin.HydrateData) (interface{}, error) {
 	conn, err := connect(ctx, d)
 	if err != nil {
-		plugin.Logger(ctx).Error("getorder", "connection_error", err)
+		plugin.Logger(ctx).Error("getOrder", "connection_error", err)
 		return nil, err
 	}
 	id := d.EqualsQuals["id"].GetInt64Value()
@@ -416,7 +416,7 @@ func getorder(ctx context.Context, d *plugin.QueryData, h *plugin.HydrateData) (
 	}
 	result, err := conn.Order.Get(id, nil)
 	if err != nil {
-		plugin.Logger(ctx).Error("getorder", "api_error", err)
+		plugin.Logger(ctx).Error("getOrder", "api_error", err)
 		return nil, err
 	}
 
