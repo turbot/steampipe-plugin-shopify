@@ -29,48 +29,48 @@ func tableShopifyDraftOrder(ctx context.Context) *plugin.Table {
 			{
 				Name:        "order_id",
 				Type:        proto.ColumnType_INT,
-				Description: "The ID of the order.",
+				Description: "The ID of the draft order.",
 				Transform:   transform.FromField("OrderID"),
 			},
 			{
 				Name:        "name",
 				Type:        proto.ColumnType_STRING,
-				Description: "The name of the order.",
+				Description: "The name of the draft order.",
 			},
 			{
 				Name:        "customer",
 				Type:        proto.ColumnType_JSON,
-				Description: "The customer associated with the order.",
+				Description: "The customer associated with the draft order.",
 			},
 			{
 				Name:        "shipping_address",
 				Type:        proto.ColumnType_JSON,
-				Description: "The shipping address for the order.",
+				Description: "The shipping address for the draft order.",
 			},
 			{
 				Name:        "billing_address",
 				Type:        proto.ColumnType_JSON,
-				Description: "The billing address for the order.",
+				Description: "The billing address for the draft order.",
 			},
 			{
 				Name:        "note",
 				Type:        proto.ColumnType_STRING,
-				Description: "An optional note attached to the order.",
+				Description: "An optional note attached to the draft order.",
 			},
 			{
 				Name:        "note_attributes",
 				Type:        proto.ColumnType_JSON,
-				Description: "Additional metadata about the order.",
+				Description: "Additional metadata about the draft order.",
 			},
 			{
 				Name:        "email",
 				Type:        proto.ColumnType_STRING,
-				Description: "The email address associated with the order.",
+				Description: "The email address associated with the draft order.",
 			},
 			{
 				Name:        "currency",
 				Type:        proto.ColumnType_STRING,
-				Description: "The currency used for the order.",
+				Description: "The currency used for the draft order.",
 			},
 			{
 				Name:        "invoice_sent_at",
@@ -86,27 +86,27 @@ func tableShopifyDraftOrder(ctx context.Context) *plugin.Table {
 			{
 				Name:        "line_items",
 				Type:        proto.ColumnType_JSON,
-				Description: "The line items in the order.",
+				Description: "The line items in the draft order.",
 			},
 			{
 				Name:        "shipping_line",
 				Type:        proto.ColumnType_JSON,
-				Description: "The shipping details for the order.",
+				Description: "The shipping details for the draft order.",
 			},
 			{
 				Name:        "tags",
 				Type:        proto.ColumnType_STRING,
-				Description: "Tags associated with the order.",
+				Description: "Tags associated with the draft order.",
 			},
 			{
 				Name:        "tax_lines",
 				Type:        proto.ColumnType_JSON,
-				Description: "The tax lines for the order.",
+				Description: "The tax lines for the draft order.",
 			},
 			{
 				Name:        "applied_discount",
 				Type:        proto.ColumnType_JSON,
-				Description: "Discounts applied to the order.",
+				Description: "Discounts applied to the draft order.",
 			},
 			{
 				Name:        "taxes_included",
@@ -116,42 +116,43 @@ func tableShopifyDraftOrder(ctx context.Context) *plugin.Table {
 		{
 				Name:        "total_tax",
 				Type:        proto.ColumnType_STRING,
-				Description: "The total amount of tax charged for the order.",
+				Description: "The total amount of tax charged for the draft order.",
 		},
 		{
 				Name:        "tax_exempt",
 				Type:        proto.ColumnType_BOOL,
-				Description: "Whether the order is tax exempt.",
+				Description: "Whether the draft order is tax exempt.",
 		},
 		{
 				Name:        "total_price",
 				Type:        proto.ColumnType_STRING,
-				Description: "The total price of the order.",
+				Description: "The total price of the draft order.",
 		},
 		{
 				Name:        "subtotal_price",
 				Type:        proto.ColumnType_DOUBLE,
-				Description: "The total price of all the order's line items, before taxes and discounts.",
+				Transform:   transform.FromField("SubtotalPrice").Transform(convertPrice),
+				Description: "The total price of all the draft order's line items, before taxes and discounts.",
 		},
 		{
 				Name:        "completed_at",
 				Type:        proto.ColumnType_TIMESTAMP,
-				Description: "The time when the order was completed.",
+				Description: "The time when the draft order was completed.",
 		},
 		{
 				Name:        "created_at",
 				Type:        proto.ColumnType_TIMESTAMP,
-				Description: "The time when the order was created.",
+				Description: "The time when the draft order was created.",
 		},
 		{
 				Name:        "updated_at",
 				Type:        proto.ColumnType_TIMESTAMP,
-				Description: "The time when the order was last updated.",
+				Description: "The time when the draft order was last updated.",
 		},
 		{
 				Name:        "status",
 				Type:        proto.ColumnType_STRING,
-				Description: "The status of the order.",
+				Description: "The status of the draft order.",
 		},
 		{
 				Name:        "use_customer_default_address",
