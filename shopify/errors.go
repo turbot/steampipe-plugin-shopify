@@ -19,14 +19,3 @@ func isNotFoundError(notFoundErrors []string) plugin.ErrorPredicateWithContext {
 		return false
 	}
 }
-
-func shouldRetryError(retryErrors []string) plugin.ErrorPredicateWithContext {
-	return func(ctx context.Context, d *plugin.QueryData, h *plugin.HydrateData, err error) bool {
-
-		if strings.Contains(err.Error(), "Exceeded 2 calls per second for api client. Reduce request rates to resume uninterrupted service.") {
-			plugin.Logger(ctx).Debug("shopify_product_variant.shouldRetryError", "rate_limit_error", err)
-			return true
-		}
-		return false
-	}
-}
