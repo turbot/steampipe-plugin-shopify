@@ -196,7 +196,7 @@ where
   total_discounts > 0;
 ```
 
-### Get the most ordered product
+### Get the most ordered product of the last month
 
 ```sql
 select
@@ -204,21 +204,25 @@ select
   p.title,
   p.product_type,
   p.created_at,
-  p.vendor
+  p.vendor,
   q.c as sales_count
 from
   shopify_product as p
   join (
     select
       item ->> 'product_id' as id,
-      count(*) as c
+      count(*) as c,
+      min(created_at) AS order_date
     from
       shopify_order,
       jsonb_array_elements(line_items) as item
+    where 
+      created_at >= (CURRENT_DATE - interval '30' day)
     group by
       item ->> 'product_id'
     order by
-      c desc
+      c desc,
+      order_date
     limit 1
   ) as q on p.id = q.id::bigint;
 ```
