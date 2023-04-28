@@ -195,3 +195,30 @@ from
 where
   total_discounts > 0;
 ```
+
+### Get the most ordered product
+
+```sql
+select
+  p.id,
+  p.title,
+  p.product_type,
+  p.created_at,
+  p.vendor
+  q.c as sales_count
+from
+  shopify_product as p
+  join (
+    select
+      item ->> 'product_id' as id,
+      count(*) as c
+    from
+      shopify_order,
+      jsonb_array_elements(line_items) as item
+    group by
+      item ->> 'product_id'
+    order by
+      c desc
+    limit 1
+  ) as q on p.id = q.id::bigint;
+```
