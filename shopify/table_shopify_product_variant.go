@@ -31,7 +31,7 @@ func tableShopifyProductVariant(ctx context.Context) *plugin.Table {
 			{
 				Name:        "product_id",
 				Type:        proto.ColumnType_INT,
-				Description: "The ID of the product.",
+				Description: "The ID of the product variant.",
 				Transform:   transform.FromField("ProductID"),
 			},
 			{
@@ -42,18 +42,18 @@ func tableShopifyProductVariant(ctx context.Context) *plugin.Table {
 			{
 				Name:        "sku",
 				Type:        proto.ColumnType_STRING,
-				Description: "The SKU of the product.",
+				Description: "The Stock Keeping Unit (SKU) for the product variant.",
 			},
 			{
 				Name:        "position",
 				Type:        proto.ColumnType_INT,
-				Description: "The position of the product.",
+				Description: "The position of the variant in the list of variants for the product.",
 				Transform:   transform.FromField("Position"),
 			},
 			{
 				Name:        "grams",
 				Type:        proto.ColumnType_INT,
-				Description: "The weight of the product in grams.",
+				Description: "The weight of the product variant in grams.",
 			},
 			{
 				Name:        "inventory_policy",
@@ -63,101 +63,101 @@ func tableShopifyProductVariant(ctx context.Context) *plugin.Table {
 			{
 				Name:        "price",
 				Type:        proto.ColumnType_DOUBLE,
-				Description: "The price of the product.",
+				Description: "The price of the product variant.",
 				Transform:   transform.FromField("Price").Transform(convertPrice),
 			},
 			// TODO: Transform not working for this field
 			{
 				Name:        "compare_at_price",
 				Type:        proto.ColumnType_DOUBLE,
-				Description: "The compare at price of the product.",
+				Description: "The compare at price of the product variant.",
 				Transform:   transform.FromField("CompareAtPrice").Transform(convertPrice),
 			},
 			{
 				Name:        "fulfillment_service",
 				Type:        proto.ColumnType_STRING,
-				Description: "The fulfillment service of the product.",
+				Description: "The fulfillment service of the product variant.",
 			},
 			{
 				Name:        "inventory_management",
 				Type:        proto.ColumnType_STRING,
-				Description: "The inventory management of the product.",
+				Description: "The inventory management of the product variant.",
 			},
 			{
 				Name:        "inventory_item_id",
 				Type:        proto.ColumnType_INT,
-				Description: "The ID of the inventory item.",
+				Description: "The inventory policy for the product variant.",
 			},
 			{
 				Name:        "option1",
 				Type:        proto.ColumnType_STRING,
-				Description: "The first product option.",
+				Description: "The first option for the variant.",
 			},
 			{
 				Name:        "option2",
 				Type:        proto.ColumnType_STRING,
-				Description: "The second product option.",
+				Description: "The second option for the variant.",
 			},
 			{
 				Name:        "option3",
 				Type:        proto.ColumnType_STRING,
-				Description: "The third product option.",
+				Description: "The third option for the variant.",
 			},
 			{
 				Name:        "created_at",
 				Type:        proto.ColumnType_TIMESTAMP,
-				Description: "The date and time when the product was created.",
+				Description: "The date and time when the product variant was created.",
 			},
 			{
 				Name:        "updated_at",
 				Type:        proto.ColumnType_TIMESTAMP,
-				Description: "The date and time when the product was last updated.",
+				Description: "The date and time when the product variant was last updated.",
 			},
 			{
 				Name:        "taxable",
 				Type:        proto.ColumnType_BOOL,
-				Description: "Whether or not the product is taxable.",
+				Description: "Whether or not the product variant is taxable.",
 			},
 			{
 				Name:        "tax_code",
 				Type:        proto.ColumnType_STRING,
-				Description: "The tax code of the product.",
+				Description: "The tax code of the product variant.",
 			},
 			{
 				Name:        "barcode",
 				Type:        proto.ColumnType_STRING,
-				Description: "The barcode of the product.",
+				Description: "The barcode of the product variant.",
 			},
 			{
 				Name:        "image_id",
 				Type:        proto.ColumnType_INT,
-				Description: "The ID of the product image.",
+				Description: "The ID for the image associated with the variant.",
 				Transform:   transform.FromField("ImageID"),
 			},
 			{
 				Name:        "inventory_quantity",
 				Type:        proto.ColumnType_INT,
-				Description: "The number of inventory items available for the product.",
+				Description: "The number of inventory items available for the product variant.",
 			},
 			{
 				Name:        "weight",
 				Type:        proto.ColumnType_STRING,
-				Description: "The weight of the product.",
+				Description: "The weight of the product variant.",
 			},
 			{
 				Name:        "weight_unit",
 				Type:        proto.ColumnType_STRING,
-				Description: "The unit of measurement for the product weight.",
+				Description: "The unit of measurement for the product variant weight.",
 			},
 			{
 				Name:        "old_inventory_quantity",
 				Type:        proto.ColumnType_INT,
-				Description: "The old inventory quantity of the product.",
+				Description: "The old inventory quantity of the product variant.",
 			},
 			{
 				Name:        "requires_shipping",
 				Type:        proto.ColumnType_BOOL,
-				Description: "Whether the product requires shipping.",
+				Description: "Whether the product variant requires shipping.",
 			},
 			{
 				Name:        "admin_graphql_api_id",
