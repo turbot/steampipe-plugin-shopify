@@ -35,18 +35,18 @@ func tableShopifyProduct(ctx context.Context) *plugin.Table {
 			{
 				Name:        "body_html",
 				Type:        proto.ColumnType_STRING,
-				Description: "the BodyHTML of the product.",
+				Description: "The BodyHTML of the product.",
 				Transform:   transform.FromField("BodyHTML"),
 			},
 			{
 				Name:        "vendor",
 				Type:        proto.ColumnType_STRING,
-				Description: "The vendor of the shopify products.",
+				Description: "The vendor of the shopify product.",
 			},
 			{
 				Name:        "product_type",
 				Type:        proto.ColumnType_STRING,
-				Description: "The type of the products sold.",
+				Description: "The type of the product.",
 			},
 			{
 				Name:        "handle",
@@ -61,12 +61,12 @@ func tableShopifyProduct(ctx context.Context) *plugin.Table {
 			{
 				Name:        "updated_at",
 				Type:        proto.ColumnType_TIMESTAMP,
-				Description: "The time product was updated.",
+				Description: "Time when the product was last updated.",
 			},
 			{
 				Name:        "published_at",
 				Type:        proto.ColumnType_TIMESTAMP,
-				Description: "The product publish time.",
+				Description: "Time when the product was published.",
 			},
 			{
 				Name:        "published_scope",

@@ -17,7 +17,7 @@ from
   shopify_product;
 ```
 
-###  Count the number of products of a particular type 
+###  Count how many items of a specific type are there
 
 ```sql
 select
@@ -31,7 +31,7 @@ group by
   product_type;
 ```
 
-### List products with particular tags
+### List products with specific tag
 
 ```sql
 select
@@ -44,7 +44,7 @@ where
   tags like '%Premium%';
 ```
 
-### List the products created within last 30 days
+### List products created within the last 30 days
 
 ```sql
 select
@@ -72,7 +72,7 @@ where
   status = 'archived';
 ```
 
-### List the product variants with quantities less than 20 
+### List the product variants with quantities less than 20
 
 ```sql
 select
