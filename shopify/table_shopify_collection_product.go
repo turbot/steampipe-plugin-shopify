@@ -21,9 +21,8 @@ type CollectionProduct struct {
 
 func tableShopifyCollectionProduct(ctx context.Context) *plugin.Table {
 	return &plugin.Table{
-		Name: "shopify_collection_product",
-		// TODO: desc
-		Description: "Shopify collection product.",
+		Name:        "shopify_collection_product",
+		Description: "Shopify collection product is a group of related items that are organized together on an online store for easy browsing and purchasing by customers.",
 		List: &plugin.ListConfig{
 			ParentHydrate: listCollections,
 			Hydrate:       listCollectionProducts,
