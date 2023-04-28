@@ -112,53 +112,53 @@ func tableShopifyDraftOrder(ctx context.Context) *plugin.Table {
 				Name:        "taxes_included",
 				Type:        proto.ColumnType_BOOL,
 				Description: "Whether taxes are included in the product price.",
-		},
-		{
+			},
+			{
 				Name:        "total_tax",
 				Type:        proto.ColumnType_STRING,
 				Description: "The total amount of tax charged for the draft order.",
-		},
-		{
+			},
+			{
 				Name:        "tax_exempt",
 				Type:        proto.ColumnType_BOOL,
 				Description: "Whether the draft order is tax exempt.",
-		},
-		{
+			},
+			{
 				Name:        "total_price",
 				Type:        proto.ColumnType_STRING,
 				Description: "The total price of the draft order.",
-		},
-		{
+			},
+			{
 				Name:        "subtotal_price",
 				Type:        proto.ColumnType_DOUBLE,
 				Transform:   transform.FromField("SubtotalPrice").Transform(convertPrice),
 				Description: "The total price of all the draft order's line items, before taxes and discounts.",
-		},
-		{
+			},
+			{
 				Name:        "completed_at",
 				Type:        proto.ColumnType_TIMESTAMP,
 				Description: "The time when the draft order was completed.",
-		},
-		{
+			},
+			{
 				Name:        "created_at",
 				Type:        proto.ColumnType_TIMESTAMP,
 				Description: "The time when the draft order was created.",
-		},
-		{
+			},
+			{
 				Name:        "updated_at",
 				Type:        proto.ColumnType_TIMESTAMP,
 				Description: "The time when the draft order was last updated.",
-		},
-		{
+			},
+			{
 				Name:        "status",
 				Type:        proto.ColumnType_STRING,
 				Description: "The status of the draft order.",
-		},
-		{
+			},
+			{
 				Name:        "use_customer_default_address",
 				Type:        proto.ColumnType_BOOL,
 				Description: "Whether to use the customer's default address for shipping and/or billing.",
-		},		
+			},
 		},
 	}
 }
