@@ -172,7 +172,7 @@ func listDraftOrder(ctx context.Context, d *plugin.QueryData, _ *plugin.HydrateD
 
 	draftOrders, err := conn.DraftOrder.List(nil)
 	if err != nil {
-		plugin.Logger(ctx).Error("listDraftOrderError", "list_api_error", err)
+		plugin.Logger(ctx).Error("listDraftOrder", "list_api_error", err)
 		return nil, err
 	}
 

@@ -85,7 +85,7 @@ select
   shipping_address
 from
   shopify_draft_order
-where 
+where
   shipping_address ->> 'city' = 'Toronto';
 ```
 
