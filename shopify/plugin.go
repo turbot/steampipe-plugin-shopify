@@ -29,6 +29,7 @@ func Plugin(ctx context.Context) *plugin.Plugin {
 			"shopify_product":            tableShopifyProduct(ctx),
 			"shopify_product_variant":    tableShopifyProductVariant(ctx),
 			"shopify_collection_product": tableShopifyCollectionProduct(ctx),
+			"shopify_theme":              tableShopifyTheme(ctx),
 		},
 	}
 	return p
