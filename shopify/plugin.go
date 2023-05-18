@@ -22,9 +22,10 @@ func Plugin(ctx context.Context) *plugin.Plugin {
 			Schema:      ConfigSchema,
 		},
 		TableMap: map[string]*plugin.Table{
-			"shopify_customer":        tableShopifyCustomer(ctx),
-			"shopify_product":         tableShopifyProduct(ctx),
-			"shopify_product_variant": tableShopifyProductVariant(ctx),
+			"shopify_custom_collection": tableShopifyCustomCollection(ctx),
+			"shopify_customer":          tableShopifyCustomer(ctx),
+			"shopify_product":           tableShopifyProduct(ctx),
+			"shopify_product_variant":   tableShopifyProductVariant(ctx),
 		},
 	}
 	return p
