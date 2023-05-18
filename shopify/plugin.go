@@ -10,16 +10,21 @@ import (
 // Plugin creates this (shopify) plugin
 func Plugin(ctx context.Context) *plugin.Plugin {
 	p := &plugin.Plugin{
-		Name:             "steampipe-plugin-shopify",
-		DefaultTransform: transform.FromCamel(),
+		Name:               "steampipe-plugin-shopify",
+		DefaultTransform:   transform.FromCamel(),
 		DefaultGetConfig: &plugin.GetConfig{
-			IgnoreConfig: &plugin.IgnoreConfig{},
+			IgnoreConfig: &plugin.IgnoreConfig{
+				ShouldIgnoreErrorFunc: isNotFoundError([]string{"Not Found"}),
+			},
 		},
 		ConnectionConfigSchema: &plugin.ConnectionConfigSchema{
 			NewInstance: ConfigInstance,
 			Schema:      ConfigSchema,
 		},
-		TableMap: map[string]*plugin.Table{},
+		TableMap: map[string]*plugin.Table{
+			"shopify_product":         tableShopifyProduct(ctx),
+			"shopify_product_variant": tableShopifyProductVariant(ctx),
+		},
 	}
 	return p
 }
