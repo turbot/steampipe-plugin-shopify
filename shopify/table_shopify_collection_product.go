@@ -136,6 +136,13 @@ func tableShopifyCollectionProduct(ctx context.Context) *plugin.Table {
 				Description: "The product template suffix.",
 				Transform:   transform.FromField("Product.TemplateSuffix"),
 			},
+			// Steampipe standard columns
+			{
+				Name:        "title",
+				Type:        proto.ColumnType_STRING,
+				Description: "Title of the resource.",
+				Transform:   transform.FromField("collection_id"),
+			},
 		},
 	}
 }
@@ -186,8 +193,19 @@ func listCollectionProducts(ctx context.Context, d *plugin.QueryData, h *plugin.
 		plugin.Logger(ctx).Error("listCollectionProducts", "connection_error", err)
 		return nil, err
 	}
+	// the max limit defined by the API is 250
+	options := goshopify.ListOptions{}
 
-	products, err := conn.Collection.ListProducts(data.ID, nil)
+	// set the limit if a lower limit is passed in query context
+	limit := d.QueryContext.Limit
+	if limit != nil {
+		if *limit < 250 {
+			options.Limit = int(*limit)
+		}
+	}
+
+	for {
+	products, paginator, err := conn.Collection.ListProductsWithPagination(data.ID, nil)
 	if err != nil {
 		plugin.Logger(ctx).Error("listProducts", "list_error", err)
 		return nil, err
@@ -199,5 +217,11 @@ func listCollectionProducts(ctx context.Context, d *plugin.QueryData, h *plugin.
 			Product:    product,
 		})
 	}
-	return nil, nil
+
+	if paginator.NextPageOptions == nil {
+		return nil, nil
+	}
+	options.PageInfo = paginator.NextPageOptions.PageInfo
+	}
+
 }

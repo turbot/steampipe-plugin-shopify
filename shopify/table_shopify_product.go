@@ -28,9 +28,10 @@ func tableShopifyProduct(ctx context.Context) *plugin.Table {
 				Transform:   transform.FromField("ID"),
 			},
 			{
-				Name:        "title",
+				Name:        "product_title",
 				Type:        proto.ColumnType_STRING,
 				Description: "The title of the product.",
+				Transform:   transform.FromField("Title"),
 			},
 			{
 				Name:        "body_html",
@@ -125,6 +126,13 @@ func tableShopifyProduct(ctx context.Context) *plugin.Table {
 				Type:        proto.ColumnType_STRING,
 				Description: "The unique identifier for the product used in the GraphQL Admin API.",
 				Transform:   transform.FromField("AdminGraphqlAPIID"),
+			},
+			// Steampipe standard columns
+			{
+				Name:        "title",
+				Type:        proto.ColumnType_STRING,
+				Description: "Title of the resource.",
+				Transform:   transform.FromField("ID"),
 			},
 		},
 	}

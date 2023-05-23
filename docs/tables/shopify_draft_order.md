@@ -105,3 +105,20 @@ where
   customer ->> 'first_name' = 'Karine'
   and customer ->> 'last_name' = 'Ruby';
 ```
+
+### List the draft orders that have total tax greater than value 100
+
+```sql
+select
+  id,
+  name,
+  email,
+  customer,
+  billing_address,
+  shipping_address,
+  total_tax
+from
+  shopify_draft_order
+where
+  (total_tax)::numeric > 100;
+```

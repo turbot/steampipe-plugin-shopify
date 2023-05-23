@@ -354,6 +354,13 @@ func tableShopifyOrder(ctx context.Context) *plugin.Table {
 				Type:        proto.ColumnType_BOOL,
 				Description: "Whether or not a fulfillment receipt was sent for the order.",
 			},
+			// Steampipe standard columns
+			{
+				Name:        "title",
+				Type:        proto.ColumnType_STRING,
+				Description: "Title of the resource.",
+				Transform:   transform.FromField("name"),
+			},
 		},
 	}
 }

@@ -87,3 +87,17 @@ from
 where
   metafields @> '[{"value": "hello test 123"}]';
 ```
+
+### List all disjunctive smart collections
+
+```sql
+select
+  id,
+  title,
+  updated_at,
+  handle
+from
+  shopify_smart_collection
+where
+  disjunctive;
+```

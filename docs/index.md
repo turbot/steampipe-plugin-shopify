@@ -56,6 +56,15 @@ Download and install the latest Shopify plugin:
 steampipe plugin install shopify
 ```
 
+### Credentials
+
+| Item        | Description                                                                                                                                                                                           |
+| ----------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Credentials | Shopify requires a `shop_name` and a [token](https://shopify.dev/docs/apps/auth/admin-app-access-tokens) for all requests.                                                                |
+| Permissions | Tokens have the same permissions as the user who creates them, and if the user permissions change, the token permissions also change.                                                         |
+| Radius      | Each connection represents a single Shopify Installation.                                                                                                                                           |
+| Resolution  | 1. Credentials explicitly set in a steampipe config file (`~/.steampipe/config/shopify.spc`)<br />2. Credentials specified in environment variables, e.g., `SHOPIFY_SHOP_NAME`, `SHOPIFY_API_TOKEN`. |
+
 ### Configuration
 
 Installing the latest shopify plugin will create a config file (`~/.steampipe/config/shopify.spc`) with a single connection named `shopify`:

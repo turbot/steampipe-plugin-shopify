@@ -68,6 +68,13 @@ func tableShopifyTheme(ctx context.Context) *plugin.Table {
 				Name:        "updated_at",
 				Type:        proto.ColumnType_TIMESTAMP,
 				Description: "The update time of the theme.",
+			},			
+			// Steampipe standard columns
+			{
+				Name:        "title",
+				Type:        proto.ColumnType_STRING,
+				Description: "Title of the resource.",
+				Transform:   transform.FromField("name"),
 			},
 		},
 	}

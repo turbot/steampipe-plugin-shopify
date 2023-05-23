@@ -130,6 +130,13 @@ func tableShopifyCustomer(ctx context.Context) *plugin.Table {
 				Transform:   transform.FromJSONTag(),
 				Description: "Customer metafields.",
 			},
+			// Steampipe standard columns
+			{
+				Name:        "title",
+				Type:        proto.ColumnType_STRING,
+				Description: "Title of the resource.",
+				Transform:   transform.FromField("id"),
+			},
 		},
 	}
 }

@@ -159,6 +159,13 @@ func tableShopifyDraftOrder(ctx context.Context) *plugin.Table {
 				Type:        proto.ColumnType_BOOL,
 				Description: "Whether to use the customer's default address for shipping and/or billing.",
 			},
+			// Steampipe standard columns
+			{
+				Name:        "title",
+				Type:        proto.ColumnType_STRING,
+				Description: "Title of the resource.",
+				Transform:   transform.FromField("name"),
+			},
 		},
 	}
 }

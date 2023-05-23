@@ -28,9 +28,10 @@ func tableShopifyCustomCollection(ctx context.Context) *plugin.Table {
 				Transform:   transform.FromField("ID"),
 			},
 			{
-				Name:        "title",
+				Name:        "custom_collection_title",
 				Type:        proto.ColumnType_STRING,
 				Description: "Title of the custom collection.",
+				Transform:   transform.FromField("Title"),
 			},
 			{
 				Name:        "handle",
@@ -85,6 +86,13 @@ func tableShopifyCustomCollection(ctx context.Context) *plugin.Table {
 				Hydrate:     listCustomCollectionMetafields,
 				Transform:   transform.FromValue(),
 				Description: "Custom collection metafields.",
+			},
+			// Steampipe standard columns
+			{
+				Name:        "title",
+				Type:        proto.ColumnType_STRING,
+				Description: "Title of the resource.",
+				Transform:   transform.FromField("id"),
 			},
 		},
 	}

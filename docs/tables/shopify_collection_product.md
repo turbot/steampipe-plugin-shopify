@@ -41,6 +41,7 @@ select
   collection_id,
   product_id,
   product_title,
+  collection_title,
   handle,
   vendor,
   status
@@ -74,4 +75,21 @@ where
   status = 'in_stock' 
 group by
   collection_title;
+```
+
+### List all the products in a collection created in the last one month
+
+```sql
+select
+  collection_id,
+  collection_title,
+  product_id,
+  product_title,
+  vendor,
+  status,
+  created_at
+from
+  shopify_collection_product
+where
+  created_at >= now()- interval '30' day;
 ```
