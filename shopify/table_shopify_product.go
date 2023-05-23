@@ -18,7 +18,7 @@ func tableShopifyProduct(ctx context.Context) *plugin.Table {
 			Hydrate:    getProduct,
 		},
 		List: &plugin.ListConfig{
-			Hydrate: listProduct,
+			Hydrate: listProducts,
 		},
 		Columns: []*plugin.Column{
 			{
@@ -130,10 +130,10 @@ func tableShopifyProduct(ctx context.Context) *plugin.Table {
 	}
 }
 
-func listProduct(ctx context.Context, d *plugin.QueryData, _ *plugin.HydrateData) (interface{}, error) {
+func listProducts(ctx context.Context, d *plugin.QueryData, _ *plugin.HydrateData) (interface{}, error) {
 	conn, err := connect(ctx, d)
 	if err != nil {
-		plugin.Logger(ctx).Error("listProduct", "connection_error", err)
+		plugin.Logger(ctx).Error("listProducts", "connection_error", err)
 		return nil, err
 	}
 
@@ -151,7 +151,7 @@ func listProduct(ctx context.Context, d *plugin.QueryData, _ *plugin.HydrateData
 	for {
 		products, paginator, err := conn.Product.ListWithPagination(options)
 		if err != nil {
-			plugin.Logger(ctx).Error("listProductError", "list_api_error", err)
+			plugin.Logger(ctx).Error("listProducts", "list_api_error", err)
 			return nil, err
 		}
 

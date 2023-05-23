@@ -31,8 +31,7 @@ from
   shopify_order
 where
   fulfillment_status = 'fulfilled'
-  and
-  shipping_address ->> 'zip' = '712136';
+  and shipping_address ->> 'zip' = '712136';
 ```
 
 ### List the total price of each order where at least one item has a price greater than $100
@@ -69,7 +68,7 @@ select
   id,
   name,
   email,
-  customer->>'name' as customer_name
+  ((customer->>'first_name') || ' ' ||  (customer->>'last_name')) as customer_name
 from
   shopify_order
 where
@@ -88,7 +87,7 @@ select
 from
   shopify_order
 where
-  cancelled_at >= (cancelled_at - interval '30' day)
+  cancelled_at >= now() - interval '30' day
 order by
   cancelled_at;
 ```
@@ -150,15 +149,14 @@ from
   shopify_order
 where
   fulfillment_status = 'fulfilled'
-  and
-  not send_fulfillment_receipt;
+  and not send_fulfillment_receipt;
 ```
 
 ### Count number of orders paid manually
 
 ```sql
 select
-  count(*)
+  count(*) as orders_paid_manually
 from
   shopify_order
 where

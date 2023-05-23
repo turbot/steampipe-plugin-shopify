@@ -20,7 +20,7 @@ from
 
 ```sql
 select
-  count(*)
+  count(*) as total_custom_collections
 from
   shopify_custom_collection;
 ```
@@ -86,7 +86,7 @@ where
 
 ```sql
 select
-  count(*)
+  count(*) as custom_collection_count
 from
   shopify_custom_collection
 where

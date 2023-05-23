@@ -11,7 +11,9 @@ Use SQL to query products, order, customers and more from Shopify.
 
 ## Quick start
 
-Install the plugin with [Steampipe](https://steampipe.io):
+### Install
+
+Download and install the latest Shopify plugin:
 
 ```shell
 steampipe plugin install shopify

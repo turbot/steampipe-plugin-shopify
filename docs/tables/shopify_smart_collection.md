@@ -33,7 +33,7 @@ from
 
 ```sql
 select
-  count(*)
+  count(*) as published_smart_collection
 from
   shopify_smart_collection
 where
@@ -52,7 +52,7 @@ select
 from
   shopify_smart_collection
 where
-  published_at >= (published_at - interval '30' day)
+  published_at >= now()- interval '30' day
 order by
   published_at;
 ```

@@ -17,7 +17,7 @@ func tableShopifyDraftOrder(ctx context.Context) *plugin.Table {
 			Hydrate:    getDraftOrder,
 		},
 		List: &plugin.ListConfig{
-			Hydrate: listDraftOrder,
+			Hydrate: listDraftOrders,
 		},
 		Columns: []*plugin.Column{
 			{
@@ -163,7 +163,7 @@ func tableShopifyDraftOrder(ctx context.Context) *plugin.Table {
 	}
 }
 
-func listDraftOrder(ctx context.Context, d *plugin.QueryData, _ *plugin.HydrateData) (interface{}, error) {
+func listDraftOrders(ctx context.Context, d *plugin.QueryData, _ *plugin.HydrateData) (interface{}, error) {
 	conn, err := connect(ctx, d)
 	if err != nil {
 		plugin.Logger(ctx).Error("listDraftOrder", "connection_error", err)

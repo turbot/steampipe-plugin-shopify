@@ -18,7 +18,7 @@ func tableShopifySmartCollection(ctx context.Context) *plugin.Table {
 			Hydrate:    getSmartCollection,
 		},
 		List: &plugin.ListConfig{
-			Hydrate: listSmartCollection,
+			Hydrate: listSmartCollections,
 		},
 		Columns: []*plugin.Column{
 			{
@@ -99,7 +99,7 @@ func tableShopifySmartCollection(ctx context.Context) *plugin.Table {
 	}
 }
 
-func listSmartCollection(ctx context.Context, d *plugin.QueryData, _ *plugin.HydrateData) (interface{}, error) {
+func listSmartCollections(ctx context.Context, d *plugin.QueryData, _ *plugin.HydrateData) (interface{}, error) {
 	conn, err := connect(ctx, d)
 	if err != nil {
 		plugin.Logger(ctx).Error("listSmartCollection", "connection_error", err)

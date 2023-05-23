@@ -115,7 +115,7 @@ func tableShopifyOrder(ctx context.Context) *plugin.Table {
 			{
 				Name:        "taxes_included",
 				Type:        proto.ColumnType_BOOL,
-				Description: "The taxes included in the order.",
+				Description: "The taxes are included in the order or not.",
 			},
 			{
 				Name:        "total_tax",

@@ -148,7 +148,7 @@ func listCustomCollectionMetafields(ctx context.Context, d *plugin.QueryData, h 
 
 	meta, err := conn.CustomCollection.ListMetafields(id, nil)
 	if err != nil {
-		plugin.Logger(ctx).Error("listCustomCollectionsMetafieldsError", "list_api_error", err)
+		plugin.Logger(ctx).Error("listCustomCollectionMetafields", "list_api_error", err)
 		return nil, err
 	}
 

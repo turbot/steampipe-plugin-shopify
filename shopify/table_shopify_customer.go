@@ -15,7 +15,7 @@ func tableShopifyCustomer(ctx context.Context) *plugin.Table {
 		Description: "Shopify customer stores information about a shop's customers, such as their contact details, their order history, and whether they've agreed to receive email marketing.",
 		Get: &plugin.GetConfig{
 			KeyColumns: plugin.SingleColumn("id"),
-			Hydrate:    getCustomers,
+			Hydrate:    getCustomer,
 		},
 		List: &plugin.ListConfig{
 			Hydrate: listCustomers,
@@ -81,7 +81,7 @@ func tableShopifyCustomer(ctx context.Context) *plugin.Table {
 			{
 				Name:        "phone",
 				Type:        proto.ColumnType_STRING,
-				Description: "Customer phone.",
+				Description: "Customer phone number.",
 			},
 			{
 				Name:        "tags",
@@ -154,7 +154,7 @@ func listCustomers(ctx context.Context, d *plugin.QueryData, _ *plugin.HydrateDa
 	for {
 		customers, paginator, err := conn.Customer.ListWithPagination(options)
 		if err != nil {
-			plugin.Logger(ctx).Error("listCustomersError", "list_api_error", err)
+			plugin.Logger(ctx).Error("listCustomers", "list_api_error", err)
 			return nil, err
 		}
 
@@ -174,7 +174,7 @@ func listCustomers(ctx context.Context, d *plugin.QueryData, _ *plugin.HydrateDa
 	}
 }
 
-func getCustomers(ctx context.Context, d *plugin.QueryData, h *plugin.HydrateData) (interface{}, error) {
+func getCustomer(ctx context.Context, d *plugin.QueryData, h *plugin.HydrateData) (interface{}, error) {
 	conn, err := connect(ctx, d)
 	if err != nil {
 		plugin.Logger(ctx).Error("getCustomer", "connection_error", err)

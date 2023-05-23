@@ -79,7 +79,7 @@ where
   product_id = '8264171749671'
 order by 
   price
-  limit 1;
+limit 1;
 ```
 
 ### Get the variants that are out of stock

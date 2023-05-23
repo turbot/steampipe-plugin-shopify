@@ -18,8 +18,8 @@ func tableShopifyProductVariant(ctx context.Context) *plugin.Table {
 			Hydrate:    getProductVariant,
 		},
 		List: &plugin.ListConfig{
-			ParentHydrate: listProduct,
-			Hydrate:       listProductVariant,
+			ParentHydrate: listProducts,
+			Hydrate:       listProductVariants,
 		},
 		Columns: []*plugin.Column{
 			{
@@ -169,17 +169,17 @@ func tableShopifyProductVariant(ctx context.Context) *plugin.Table {
 	}
 }
 
-func listProductVariant(ctx context.Context, d *plugin.QueryData, h *plugin.HydrateData) (interface{}, error) {
+func listProductVariants(ctx context.Context, d *plugin.QueryData, h *plugin.HydrateData) (interface{}, error) {
 	conn, err := connect(ctx, d)
 	if err != nil {
-		plugin.Logger(ctx).Error("listProductVariant", "connection_error", err)
+		plugin.Logger(ctx).Error("listProductVariants", "connection_error", err)
 		return nil, err
 	}
 	id := h.Item.(goshopify.Product).ID
 
 	variants, err := conn.Variant.List(id, nil)
 	if err != nil {
-		plugin.Logger(ctx).Error("listProductVariantError", "list_api_error", err)
+		plugin.Logger(ctx).Error("listProductVariants", "list_api_error", err)
 		return nil, err
 	}
 

@@ -46,7 +46,7 @@ from
 
 - **[Table definitions & examples →](/plugins/turbot/shopify/tables)**
 
-## Get started
+## Quick start
 
 ### Install
 
@@ -79,10 +79,11 @@ connection "shopify" {
 
 - `token` - Shopify api_token is a secure and unique identifier that is used to authenticate and authorize a third-party app or service to access a Shopify store's data and perform actions on behalf of the store owner.
 
-Environment variables are also available as an alternate configuration method:
+Alternatively, you can also use the standard Shopify environment variables to obtain credentials **only if other arguments (`shop_name ` and `token `) are not specified** in the connection:
 
-- `SHOPIFY_SHOP_NAME`
-- `SHOPIFY_API_TOKEN`
+```sh
+export SHOPIFY_SHOP_NAME= theshop
+export SHOPIFY_API_TOKEN=shpat_ab0a4zaa19c3faketoken924176b387d
 
 ## Get involved
 

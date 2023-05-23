@@ -15,10 +15,10 @@ func tableShopifyTheme(ctx context.Context) *plugin.Table {
 		Description: "Shopify themes are pre-designed website templates that allow you to easily customize the look and feel of your online store without requiring advanced web development skills.",
 		Get: &plugin.GetConfig{
 			KeyColumns: plugin.SingleColumn("id"),
-			Hydrate:    getShopifyThemes,
+			Hydrate:    getTheme,
 		},
 		List: &plugin.ListConfig{
-			Hydrate: listShopifyThemes,
+			Hydrate: listThemes,
 		},
 		Columns: []*plugin.Column{
 			{
@@ -73,7 +73,7 @@ func tableShopifyTheme(ctx context.Context) *plugin.Table {
 	}
 }
 
-func listShopifyThemes(ctx context.Context, d *plugin.QueryData, _ *plugin.HydrateData) (interface{}, error) {
+func listThemes(ctx context.Context, d *plugin.QueryData, _ *plugin.HydrateData) (interface{}, error) {
 	conn, err := connect(ctx, d)
 	if err != nil {
 		plugin.Logger(ctx).Error("listThemes", "connection_error", err)
@@ -96,18 +96,18 @@ func listShopifyThemes(ctx context.Context, d *plugin.QueryData, _ *plugin.Hydra
 	return nil, nil
 }
 
-func getShopifyThemes(ctx context.Context, d *plugin.QueryData, h *plugin.HydrateData) (interface{}, error) {
+func getTheme(ctx context.Context, d *plugin.QueryData, h *plugin.HydrateData) (interface{}, error) {
 	id := h.Item.(goshopify.Theme).ID
 
 	conn, err := connect(ctx, d)
 	if err != nil {
-		plugin.Logger(ctx).Error("getShopifyThemes", "connection_error", err)
+		plugin.Logger(ctx).Error("getTheme", "connection_error", err)
 		return nil, err
 	}
 
 	theme, err := conn.Theme.Get(id, nil)
 	if err != nil {
-		plugin.Logger(ctx).Error("getShopifyThemes", "get_api_error", err)
+		plugin.Logger(ctx).Error("getTheme", "get_api_error", err)
 		return nil, err
 	}
 

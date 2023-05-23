@@ -72,7 +72,7 @@ from
   shopify_draft_order,
   jsonb_array_elements(line_items) as li
 where
-  li -> 'product_id' = '8264171716903'
+  li -> 'product_id' = '8264171716903';
 ```
 
 ### List all the draft orders from a particular city
@@ -103,5 +103,5 @@ from
   shopify_draft_order
 where
   customer ->> 'first_name' = 'Karine'
-  and customer ->> 'last_name' = 'Ruby'
+  and customer ->> 'last_name' = 'Ruby';
 ```

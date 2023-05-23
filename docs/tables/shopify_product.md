@@ -52,7 +52,7 @@ select
 from
   shopify_product
 where
-  created_at >= (created_at - interval '30' day)
+  created_at >= now() - interval '30' day
 order by
   created_at;
 ```

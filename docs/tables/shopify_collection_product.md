@@ -67,9 +67,7 @@ group by
 ```sql
 select
   collection_title,
-  count(*)
-as
-  total_count 
+  count(*) as total_count 
 from
   shopify_collection_product
 where
