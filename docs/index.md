@@ -16,7 +16,7 @@ og_image: "/images/plugins/turbot/shopify-social-graphic.png"
 
 [Steampipe](https://steampipe.io) is an open source CLI to instantly query cloud APIs using SQL.
 
-Get Shopify order details:
+List Shopify order details:
 
 ```sql
 select
@@ -60,7 +60,7 @@ steampipe plugin install shopify
 
 | Item        | Description                                                                                                                                                                                           |
 | ----------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Credentials | Shopify requires a `shop_name` and a [token](https://shopify.dev/docs/apps/auth/admin-app-access-tokens) for all requests.                                                                |
+| Credentials | Shopify requires a `shop name` and a [token](https://shopify.dev/docs/apps/auth/admin-app-access-tokens) for all requests.                                                                |
 | Permissions | Tokens have the same permissions as the user who creates them, and if the user permissions change, the token permissions also change.                                                         |
 | Radius      | Each connection represents a single Shopify Installation.                                                                                                                                           |
 | Resolution  | 1. Credentials explicitly set in a steampipe config file (`~/.steampipe/config/shopify.spc`)<br />2. Credentials specified in environment variables, e.g., `SHOPIFY_SHOP_NAME`, `SHOPIFY_API_TOKEN`. |
@@ -68,6 +68,8 @@ steampipe plugin install shopify
 ### Configuration
 
 Installing the latest shopify plugin will create a config file (`~/.steampipe/config/shopify.spc`) with a single connection named `shopify`:
+
+Configure your account details in `~/.steampipe/config/shopify.spc`:
 
 ```hcl
 connection "shopify" {
@@ -84,15 +86,12 @@ connection "shopify" {
 }
 ```
 
-- `shop_name` - Shopify shop_name refers to the unique name that a merchant chooses for their online store built on the Shopify platform.
-
-- `token` - Shopify api_token is a secure and unique identifier that is used to authenticate and authorize a third-party app or service to access a Shopify store's data and perform actions on behalf of the store owner.
-
 Alternatively, you can also use the standard Shopify environment variables to obtain credentials **only if other arguments (`shop_name ` and `token `) are not specified** in the connection:
 
 ```sh
-export SHOPIFY_SHOP_NAME= theshop
+export SHOPIFY_SHOP_NAME=theshop
 export SHOPIFY_API_TOKEN=shpat_ab0a4zaa19c3faketoken924176b387d
+```
 
 ## Get involved
 

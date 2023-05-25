@@ -90,9 +90,8 @@ select
 from
   shopify_custom_collection
 where
-  published=true
-and
-  date_trunc('month', published_at) = '2023-04-01';
+  published = true
+  and date_trunc('month', published_at) = '2023-04-01';
 ```
 
 ### Retrieve all custom collections that contain a specific metafield key

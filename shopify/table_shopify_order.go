@@ -368,7 +368,7 @@ func tableShopifyOrder(ctx context.Context) *plugin.Table {
 func listOrders(ctx context.Context, d *plugin.QueryData, _ *plugin.HydrateData) (interface{}, error) {
 	conn, err := connect(ctx, d)
 	if err != nil {
-		plugin.Logger(ctx).Error("listOrder", "connection_error", err)
+		plugin.Logger(ctx).Error("listOrders", "connection_error", err)
 		return nil, err
 	}
 
@@ -390,7 +390,7 @@ func listOrders(ctx context.Context, d *plugin.QueryData, _ *plugin.HydrateData)
 	for {
 		orders, paginator, err := conn.Order.ListWithPagination(options)
 		if err != nil {
-			plugin.Logger(ctx).Error("listOrder", "list_api_error", err)
+			plugin.Logger(ctx).Error("listOrders", "list_api_error", err)
 			return nil, err
 		}
 

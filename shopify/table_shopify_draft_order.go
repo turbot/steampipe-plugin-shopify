@@ -173,13 +173,13 @@ func tableShopifyDraftOrder(ctx context.Context) *plugin.Table {
 func listDraftOrders(ctx context.Context, d *plugin.QueryData, _ *plugin.HydrateData) (interface{}, error) {
 	conn, err := connect(ctx, d)
 	if err != nil {
-		plugin.Logger(ctx).Error("listDraftOrder", "connection_error", err)
+		plugin.Logger(ctx).Error("listDraftOrders", "connection_error", err)
 		return nil, err
 	}
 
 	draftOrders, err := conn.DraftOrder.List(nil)
 	if err != nil {
-		plugin.Logger(ctx).Error("listDraftOrder", "list_api_error", err)
+		plugin.Logger(ctx).Error("listDraftOrders", "list_api_error", err)
 		return nil, err
 	}
 

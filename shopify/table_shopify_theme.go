@@ -68,7 +68,7 @@ func tableShopifyTheme(ctx context.Context) *plugin.Table {
 				Name:        "updated_at",
 				Type:        proto.ColumnType_TIMESTAMP,
 				Description: "The update time of the theme.",
-			},			
+			},
 			// Steampipe standard columns
 			{
 				Name:        "title",
@@ -89,7 +89,7 @@ func listThemes(ctx context.Context, d *plugin.QueryData, _ *plugin.HydrateData)
 
 	themes, err := conn.Theme.List(nil)
 	if err != nil {
-		plugin.Logger(ctx).Error("listThemes", "list_api_error", err)
+		plugin.Logger(ctx).Error("listThemes", "api_error", err)
 		return nil, err
 	}
 	for _, theme := range themes {
@@ -114,7 +114,7 @@ func getTheme(ctx context.Context, d *plugin.QueryData, h *plugin.HydrateData) (
 
 	theme, err := conn.Theme.Get(id, nil)
 	if err != nil {
-		plugin.Logger(ctx).Error("getTheme", "get_api_error", err)
+		plugin.Logger(ctx).Error("getTheme", "api_error", err)
 		return nil, err
 	}
 

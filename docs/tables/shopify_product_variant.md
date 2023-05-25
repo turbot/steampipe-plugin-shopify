@@ -1,4 +1,4 @@
-# Table: shopify_product
+# Table: shopify_product_variant
 
 Shopify Products Variant can be added to a Product resource to represent one version of a product with several options. The Product resource will have a variant for every possible combination of its options.
 
@@ -19,34 +19,34 @@ from
 ### Retrieve all products where the weight is greater than 5.5 pounds
 
 ```sql
-select 
+select
   id,
   product_id,
   title,
   weight,
   weight_unit,
   inventory_item_id
-from 
-  shopify_product_variant 
-where 
-  weight::decimal > 5.5 
+from
+  shopify_product_variant
+where
+  weight::decimal > 5.5
   and weight_unit = 'lb';
 ```
 
 ### Retrieve all products that have a price less than $50 and are not taxable
 
 ```sql
-select 
+select
   id,
   product_id,
   title,
   weight,
   weight_unit,
   inventory_item_id
-from 
-  shopify_product_variant 
-where 
-  price::numeric < 50 
+from
+  shopify_product_variant
+where
+  price::numeric < 50
   and not taxable;
 ```
 
@@ -60,8 +60,8 @@ select
   inventory_item_id
 from
   shopify_product_variant
-where 
-  inventory_management is not null 
+where
+  inventory_management is not null
   and inventory_quantity < 10;
 ```
 
@@ -75,9 +75,9 @@ select
   inventory_item_id
 from
   shopify_product_variant
-where 
+where
   product_id = '8264171749671'
-order by 
+order by
   price
 limit 1;
 ```
@@ -92,7 +92,7 @@ select
   inventory_item_id
 from
   shopify_product_variant
-where 
+where
   inventory_quantity = 0;
 ```
 
@@ -106,7 +106,7 @@ select
   inventory_item_id
 from
   shopify_product_variant
-where 
+where
   barcode is not null
   and fulfillment_service = 'my_fulfillment_service';
 ```

@@ -110,13 +110,13 @@ func tableShopifySmartCollection(ctx context.Context) *plugin.Table {
 func listSmartCollections(ctx context.Context, d *plugin.QueryData, _ *plugin.HydrateData) (interface{}, error) {
 	conn, err := connect(ctx, d)
 	if err != nil {
-		plugin.Logger(ctx).Error("listSmartCollection", "connection_error", err)
+		plugin.Logger(ctx).Error("listSmartCollections", "connection_error", err)
 		return nil, err
 	}
 
 	smartCols, err := conn.SmartCollection.List(nil)
 	if err != nil {
-		plugin.Logger(ctx).Error("listSmartCollection", "list_api_error", err)
+		plugin.Logger(ctx).Error("listSmartCollections", "list_api_error", err)
 		return nil, err
 	}
 

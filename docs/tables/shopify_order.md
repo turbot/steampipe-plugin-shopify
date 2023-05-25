@@ -1,4 +1,4 @@
-# Table: shopify_product
+# Table: shopify_order
 
 Shopify Orders record all the orders that customers have made in the Shopify store.
 
@@ -214,7 +214,7 @@ from
     from
       shopify_order,
       jsonb_array_elements(line_items) as item
-    where 
+    where
       created_at >= (CURRENT_DATE - interval '30' day)
     group by
       item ->> 'product_id'

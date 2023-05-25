@@ -19,14 +19,25 @@ Download and install the latest Shopify plugin:
 steampipe plugin install shopify
 ```
 
-Configure the API key in `~/.steampipe/config/shopify.spc`:
+Configure your [credentials](https://hub.steampipe.io/plugins/turbot/shopify#credentials) and [config file](https://hub.steampipe.io/plugins/turbot/shopify#configuration).
+
+Configure your account details in `~/.steampipe/config/shopify.spc`:
 
 ```hcl
 connection "shopify" {
   plugin = "shopify"
+
+  # Authentication information
   shop_name = "myshop"
   token = "shpat_ab0a4zaa19c3faketoken924176b387d"
 }
+```
+
+Or through environment variables:
+
+```sh
+export SHOPIFY_SHOP_NAME=theshop
+export SHOPIFY_API_TOKEN=shpat_ab0a4zaa19c3faketoken924176b387d
 ```
 
 Run steampipe:
@@ -35,7 +46,7 @@ Run steampipe:
 steampipe query
 ```
 
-Get Shopify order details:
+List Shopify order details:
 
 ```sql
 select

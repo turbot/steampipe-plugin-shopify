@@ -66,13 +66,13 @@ select
   customer,
   li ->> 'name' as product_name,
   li ->> 'price' as product_price,
-  li -> 'product_id' as product_id,
+  li ->> 'product_id' as product_id,
   billing_address
 from
   shopify_draft_order,
   jsonb_array_elements(line_items) as li
 where
-  li -> 'product_id' = '8264171716903';
+  li ->> 'product_id' = '8264171716903';
 ```
 
 ### List all the draft orders from a particular city
@@ -106,7 +106,7 @@ where
   and customer ->> 'last_name' = 'Ruby';
 ```
 
-### List the draft orders that have total tax greater than value 100
+### List the draft orders that have total tax greater than 100
 
 ```sql
 select
