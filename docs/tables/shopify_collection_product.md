@@ -91,5 +91,5 @@ select
 from
   shopify_collection_product
 where
-  created_at >= now()- interval '30' day;
+  created_at >= now() - interval '30' day;
 ```

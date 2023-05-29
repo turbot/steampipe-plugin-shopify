@@ -66,7 +66,7 @@ where
   total_spent = (select max(total_spent) from shopify_customer);
 ```
 
-### Get the default address for a customer
+### Get the default address of a customer
 
 ```sql
 select

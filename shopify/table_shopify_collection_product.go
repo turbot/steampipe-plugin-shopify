@@ -141,7 +141,7 @@ func tableShopifyCollectionProduct(ctx context.Context) *plugin.Table {
 				Name:        "title",
 				Type:        proto.ColumnType_STRING,
 				Description: "Title of the resource.",
-				Transform:   transform.FromField("collection_id"),
+				Transform:   transform.FromField("Product.Title"),
 			},
 		},
 	}
@@ -150,7 +150,7 @@ func tableShopifyCollectionProduct(ctx context.Context) *plugin.Table {
 func listCollections(ctx context.Context, d *plugin.QueryData, h *plugin.HydrateData) (interface{}, error) {
 	conn, err := connect(ctx, d)
 	if err != nil {
-		plugin.Logger(ctx).Error("listCollections", "connection_error", err)
+		plugin.Logger(ctx).Error("shopify_collection_product.listCollections", "connection_error", err)
 		return nil, err
 	}
 
@@ -190,7 +190,7 @@ func listCollectionProducts(ctx context.Context, d *plugin.QueryData, h *plugin.
 	data := h.Item.(Collection)
 	conn, err := connect(ctx, d)
 	if err != nil {
-		plugin.Logger(ctx).Error("listCollectionProducts", "connection_error", err)
+		plugin.Logger(ctx).Error("shopify_collection_product.listCollectionProducts", "connection_error", err)
 		return nil, err
 	}
 	// the max limit defined by the API is 250
@@ -205,23 +205,23 @@ func listCollectionProducts(ctx context.Context, d *plugin.QueryData, h *plugin.
 	}
 
 	for {
-	products, paginator, err := conn.Collection.ListProductsWithPagination(data.ID, nil)
-	if err != nil {
-		plugin.Logger(ctx).Error("listProducts", "list_error", err)
-		return nil, err
-	}
+		products, paginator, err := conn.Collection.ListProductsWithPagination(data.ID, nil)
+		if err != nil {
+			plugin.Logger(ctx).Error("shopify_collection_product.listProducts", "api_error", err)
+			return nil, err
+		}
 
-	for _, product := range products {
-		d.StreamListItem(ctx, CollectionProduct{
-			Collection: data,
-			Product:    product,
-		})
-	}
+		for _, product := range products {
+			d.StreamListItem(ctx, CollectionProduct{
+				Collection: data,
+				Product:    product,
+			})
+		}
 
-	if paginator.NextPageOptions == nil {
-		return nil, nil
-	}
-	options.PageInfo = paginator.NextPageOptions.PageInfo
+		if paginator.NextPageOptions == nil {
+			return nil, nil
+		}
+		options.PageInfo = paginator.NextPageOptions.PageInfo
 	}
 
 }

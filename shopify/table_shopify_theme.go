@@ -3,7 +3,6 @@ package shopify
 import (
 	"context"
 
-	goshopify "github.com/bold-commerce/go-shopify/v3"
 	"github.com/turbot/steampipe-plugin-sdk/v5/grpc/proto"
 	"github.com/turbot/steampipe-plugin-sdk/v5/plugin"
 	"github.com/turbot/steampipe-plugin-sdk/v5/plugin/transform"
@@ -74,7 +73,7 @@ func tableShopifyTheme(ctx context.Context) *plugin.Table {
 				Name:        "title",
 				Type:        proto.ColumnType_STRING,
 				Description: "Title of the resource.",
-				Transform:   transform.FromField("name"),
+				Transform:   transform.FromField("Name"),
 			},
 		},
 	}
@@ -83,13 +82,13 @@ func tableShopifyTheme(ctx context.Context) *plugin.Table {
 func listThemes(ctx context.Context, d *plugin.QueryData, _ *plugin.HydrateData) (interface{}, error) {
 	conn, err := connect(ctx, d)
 	if err != nil {
-		plugin.Logger(ctx).Error("listThemes", "connection_error", err)
+		plugin.Logger(ctx).Error("shopify_theme.listThemes", "connection_error", err)
 		return nil, err
 	}
 
 	themes, err := conn.Theme.List(nil)
 	if err != nil {
-		plugin.Logger(ctx).Error("listThemes", "api_error", err)
+		plugin.Logger(ctx).Error("shopify_theme.listThemes", "api_error", err)
 		return nil, err
 	}
 	for _, theme := range themes {
@@ -104,17 +103,23 @@ func listThemes(ctx context.Context, d *plugin.QueryData, _ *plugin.HydrateData)
 }
 
 func getTheme(ctx context.Context, d *plugin.QueryData, h *plugin.HydrateData) (interface{}, error) {
-	id := h.Item.(goshopify.Theme).ID
+
+	id := d.EqualsQuals["id"].GetInt64Value()
+
+	// check if the id is empty
+	if id == 0 {
+		return nil, nil
+	}
 
 	conn, err := connect(ctx, d)
 	if err != nil {
-		plugin.Logger(ctx).Error("getTheme", "connection_error", err)
+		plugin.Logger(ctx).Error("shopify_theme.getTheme", "connection_error", err)
 		return nil, err
 	}
 
 	theme, err := conn.Theme.Get(id, nil)
 	if err != nil {
-		plugin.Logger(ctx).Error("getTheme", "api_error", err)
+		plugin.Logger(ctx).Error("shopify_theme.getTheme", "api_error", err)
 		return nil, err
 	}
 

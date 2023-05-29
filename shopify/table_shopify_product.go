@@ -132,7 +132,7 @@ func tableShopifyProduct(ctx context.Context) *plugin.Table {
 				Name:        "title",
 				Type:        proto.ColumnType_STRING,
 				Description: "Title of the resource.",
-				Transform:   transform.FromField("ID"),
+				Transform:   transform.FromField("Title"),
 			},
 		},
 	}
@@ -141,7 +141,7 @@ func tableShopifyProduct(ctx context.Context) *plugin.Table {
 func listProducts(ctx context.Context, d *plugin.QueryData, _ *plugin.HydrateData) (interface{}, error) {
 	conn, err := connect(ctx, d)
 	if err != nil {
-		plugin.Logger(ctx).Error("listProducts", "connection_error", err)
+		plugin.Logger(ctx).Error("shopify_product.listProducts", "connection_error", err)
 		return nil, err
 	}
 
@@ -159,7 +159,7 @@ func listProducts(ctx context.Context, d *plugin.QueryData, _ *plugin.HydrateDat
 	for {
 		products, paginator, err := conn.Product.ListWithPagination(options)
 		if err != nil {
-			plugin.Logger(ctx).Error("listProducts", "list_api_error", err)
+			plugin.Logger(ctx).Error("shopify_product.listProducts", "api_error", err)
 			return nil, err
 		}
 
@@ -179,38 +179,42 @@ func listProducts(ctx context.Context, d *plugin.QueryData, _ *plugin.HydrateDat
 }
 
 func getProduct(ctx context.Context, d *plugin.QueryData, h *plugin.HydrateData) (interface{}, error) {
-	conn, err := connect(ctx, d)
-	if err != nil {
-		plugin.Logger(ctx).Error("getProduct", "connection_error", err)
-		return nil, err
-	}
+
 	id := d.EqualsQuals["id"].GetInt64Value()
 
 	// check if the id is 0
 	if id == 0 {
 		return nil, nil
 	}
-	result, err := conn.Product.Get(id, nil)
+
+	conn, err := connect(ctx, d)
 	if err != nil {
-		plugin.Logger(ctx).Error("getProduct", "api_error", err)
+		plugin.Logger(ctx).Error("shopify_product.getProduct", "connection_error", err)
 		return nil, err
 	}
 
-	return result, nil
+	result, err := conn.Product.Get(id, nil)
+	if err != nil {
+		plugin.Logger(ctx).Error("shopify_product.getProduct", "api_error", err)
+		return nil, err
+	}
+
+	return *result, nil
 }
 
 func listProductMetafields(ctx context.Context, d *plugin.QueryData, h *plugin.HydrateData) (interface{}, error) {
+
 	id := h.Item.(goshopify.Product).ID
 
 	conn, err := connect(ctx, d)
 	if err != nil {
-		plugin.Logger(ctx).Error("listProductMetafields", "connection_error", err)
+		plugin.Logger(ctx).Error("shopify_product.listProductMetafields", "connection_error", err)
 		return nil, err
 	}
 
 	meta, err := conn.Product.ListMetafields(id, nil)
 	if err != nil {
-		plugin.Logger(ctx).Error("listProductMetafields", "list_api_error", err)
+		plugin.Logger(ctx).Error("shopify_product.listProductMetafields", "api_error", err)
 		return nil, err
 	}
 

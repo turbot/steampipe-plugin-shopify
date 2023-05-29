@@ -171,7 +171,7 @@ func tableShopifyProductVariant(ctx context.Context) *plugin.Table {
 				Name:        "title",
 				Type:        proto.ColumnType_STRING,
 				Description: "Title of the resource.",
-				Transform:   transform.FromField("name"),
+				Transform:   transform.FromField("Title"),
 			},
 		},
 	}
@@ -180,14 +180,14 @@ func tableShopifyProductVariant(ctx context.Context) *plugin.Table {
 func listProductVariants(ctx context.Context, d *plugin.QueryData, h *plugin.HydrateData) (interface{}, error) {
 	conn, err := connect(ctx, d)
 	if err != nil {
-		plugin.Logger(ctx).Error("listProductVariants", "connection_error", err)
+		plugin.Logger(ctx).Error("shopify_product_variant.listProductVariants", "connection_error", err)
 		return nil, err
 	}
 	id := h.Item.(goshopify.Product).ID
 
 	variants, err := conn.Variant.List(id, nil)
 	if err != nil {
-		plugin.Logger(ctx).Error("listProductVariants", "list_api_error", err)
+		plugin.Logger(ctx).Error("shopify_product_variant.listProductVariants", "api_error", err)
 		return nil, err
 	}
 
@@ -202,20 +202,23 @@ func listProductVariants(ctx context.Context, d *plugin.QueryData, h *plugin.Hyd
 }
 
 func getProductVariant(ctx context.Context, d *plugin.QueryData, h *plugin.HydrateData) (interface{}, error) {
-	conn, err := connect(ctx, d)
-	if err != nil {
-		plugin.Logger(ctx).Error("getProductVariant", "connection_error", err)
-		return nil, err
-	}
+
 	id := d.EqualsQuals["id"].GetInt64Value()
 
 	// check if the id is 0
 	if id == 0 {
 		return nil, nil
 	}
+
+	conn, err := connect(ctx, d)
+	if err != nil {
+		plugin.Logger(ctx).Error("shopify_product_variant.getProductVariant", "connection_error", err)
+		return nil, err
+	}
+
 	result, err := conn.Variant.Get(id, nil)
 	if err != nil {
-		plugin.Logger(ctx).Error("getProductVariant", "api_error", err)
+		plugin.Logger(ctx).Error("shopify_product_variant.getProductVariant", "api_error", err)
 		return nil, err
 	}
 

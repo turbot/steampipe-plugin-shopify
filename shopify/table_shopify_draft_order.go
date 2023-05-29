@@ -164,7 +164,7 @@ func tableShopifyDraftOrder(ctx context.Context) *plugin.Table {
 				Name:        "title",
 				Type:        proto.ColumnType_STRING,
 				Description: "Title of the resource.",
-				Transform:   transform.FromField("name"),
+				Transform:   transform.FromField("Name"),
 			},
 		},
 	}
@@ -173,13 +173,13 @@ func tableShopifyDraftOrder(ctx context.Context) *plugin.Table {
 func listDraftOrders(ctx context.Context, d *plugin.QueryData, _ *plugin.HydrateData) (interface{}, error) {
 	conn, err := connect(ctx, d)
 	if err != nil {
-		plugin.Logger(ctx).Error("listDraftOrders", "connection_error", err)
+		plugin.Logger(ctx).Error("shopify_draft_order.listDraftOrders", "connection_error", err)
 		return nil, err
 	}
 
 	draftOrders, err := conn.DraftOrder.List(nil)
 	if err != nil {
-		plugin.Logger(ctx).Error("listDraftOrders", "list_api_error", err)
+		plugin.Logger(ctx).Error("shopify_draft_order.listDraftOrders", "api_error", err)
 		return nil, err
 	}
 
@@ -194,20 +194,23 @@ func listDraftOrders(ctx context.Context, d *plugin.QueryData, _ *plugin.Hydrate
 }
 
 func getDraftOrder(ctx context.Context, d *plugin.QueryData, h *plugin.HydrateData) (interface{}, error) {
-	conn, err := connect(ctx, d)
-	if err != nil {
-		plugin.Logger(ctx).Error("getDraftOrder", "connection_error", err)
-		return nil, err
-	}
+
 	id := d.EqualsQuals["id"].GetInt64Value()
 
 	// check if the id is 0
 	if id == 0 {
 		return nil, nil
 	}
+
+	conn, err := connect(ctx, d)
+	if err != nil {
+		plugin.Logger(ctx).Error("shopify_draft_order.getDraftOrder", "connection_error", err)
+		return nil, err
+	}
+
 	result, err := conn.DraftOrder.Get(id, nil)
 	if err != nil {
-		plugin.Logger(ctx).Error("getDraftOrder", "api_error", err)
+		plugin.Logger(ctx).Error("shopify_draft_order.getDraftOrder", "api_error", err)
 		return nil, err
 	}
 

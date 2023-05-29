@@ -135,7 +135,7 @@ func tableShopifyCustomer(ctx context.Context) *plugin.Table {
 				Name:        "title",
 				Type:        proto.ColumnType_STRING,
 				Description: "Title of the resource.",
-				Transform:   transform.FromField("id"),
+				Transform:   transform.FromField("Email"),
 			},
 		},
 	}
@@ -144,7 +144,7 @@ func tableShopifyCustomer(ctx context.Context) *plugin.Table {
 func listCustomers(ctx context.Context, d *plugin.QueryData, _ *plugin.HydrateData) (interface{}, error) {
 	conn, err := connect(ctx, d)
 	if err != nil {
-		plugin.Logger(ctx).Error("listCustomers", "connection_error", err)
+		plugin.Logger(ctx).Error("shopify_customer.listCustomers", "connection_error", err)
 		return nil, err
 	}
 	// the max limit defined by the API is 250
@@ -161,7 +161,7 @@ func listCustomers(ctx context.Context, d *plugin.QueryData, _ *plugin.HydrateDa
 	for {
 		customers, paginator, err := conn.Customer.ListWithPagination(options)
 		if err != nil {
-			plugin.Logger(ctx).Error("listCustomers", "list_api_error", err)
+			plugin.Logger(ctx).Error("shopify_customer.listCustomers", "api_error", err)
 			return nil, err
 		}
 
@@ -182,21 +182,22 @@ func listCustomers(ctx context.Context, d *plugin.QueryData, _ *plugin.HydrateDa
 }
 
 func getCustomer(ctx context.Context, d *plugin.QueryData, h *plugin.HydrateData) (interface{}, error) {
-	conn, err := connect(ctx, d)
-	if err != nil {
-		plugin.Logger(ctx).Error("getCustomer", "connection_error", err)
-		return nil, err
-	}
 
 	id := d.EqualsQuals["id"].GetInt64Value()
+
 	// check if the id is empty
 	if id == 0 {
 		return nil, nil
 	}
+	conn, err := connect(ctx, d)
+	if err != nil {
+		plugin.Logger(ctx).Error("shopify_customer.getCustomer", "connection_error", err)
+		return nil, err
+	}
 
 	result, err := conn.Customer.Get(id, nil)
 	if err != nil {
-		plugin.Logger(ctx).Error("getCustomer", "get_api_error", err)
+		plugin.Logger(ctx).Error("shopify_customer.getCustomer", "api_error", err)
 		return nil, err
 	}
 

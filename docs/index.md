@@ -2,7 +2,7 @@
 organization: Turbot
 category: ["internet"]
 icon_url: "/images/plugins/turbot/shopify.svg"
-brand_color: "#6BBF4E"
+brand_color: "#95BF47"
 display_name: "Shopify"
 short_name: "shopify"
 description: "Steampipe plugin to query products, order, customers and more from Shopify."
@@ -63,7 +63,7 @@ steampipe plugin install shopify
 | Credentials | Shopify requires a `shop name` and an [api_token](https://shopify.dev/docs/apps/auth/admin-app-access-tokens) for all requests.                                                                |
 | Permissions | API tokens have the same permissions as the user who creates them, and if the user permissions change, the token permissions also change.                                                         |
 | Radius      | Each connection represents a single Shopify Installation.                                                                                                                                           |
-| Resolution  | 1. Credentials explicitly set in a steampipe config file (`~/.steampipe/config/shopify.spc`)<br />2. Credentials specified in environment variables, e.g., `SHOPIFY_SHOP_NAME`, `SHOPIFY_API_TOKEN`. |
+| Resolution  | 1. Credentials explicitly set in a steampipe config file (`~/.steampipe/config/shopify.spc`)<br />2. Credentials specified in environment variables, e.g., `SHOPIFY_API_TOKEN`, `SHOPIFY_SHOP_NAME`. |
 
 ### Configuration
 
@@ -86,11 +86,11 @@ connection "shopify" {
 }
 ```
 
-Alternatively, you can also use the standard Shopify environment variables to obtain credentials **only if other arguments (`shop_name ` and `api_token `) are not specified** in the connection:
+Alternatively, you can also use the standard Shopify environment variables to obtain credentials **only if other arguments (`api_token` and `shop_name`) are not specified** in the connection:
 
 ```sh
-export SHOPIFY_SHOP_NAME=theshop
 export SHOPIFY_API_TOKEN=shpat_ab0a4zaa19c3faketoken924176b387d
+export SHOPIFY_SHOP_NAME=theshop
 ```
 
 ## Get involved

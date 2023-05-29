@@ -36,7 +36,7 @@ func tableShopifyCustomCollection(ctx context.Context) *plugin.Table {
 			{
 				Name:        "handle",
 				Type:        proto.ColumnType_STRING,
-				Description: "The handle of the custom collection",
+				Description: "The handle of the custom collection.",
 			},
 			{
 				Name:        "updated_at",
@@ -92,7 +92,7 @@ func tableShopifyCustomCollection(ctx context.Context) *plugin.Table {
 				Name:        "title",
 				Type:        proto.ColumnType_STRING,
 				Description: "Title of the resource.",
-				Transform:   transform.FromField("id"),
+				Transform:   transform.FromField("Title"),
 			},
 		},
 	}
@@ -101,13 +101,13 @@ func tableShopifyCustomCollection(ctx context.Context) *plugin.Table {
 func listCustomCollections(ctx context.Context, d *plugin.QueryData, _ *plugin.HydrateData) (interface{}, error) {
 	conn, err := connect(ctx, d)
 	if err != nil {
-		plugin.Logger(ctx).Error("listCustomCollections", "connection_error", err)
+		plugin.Logger(ctx).Error("shopify_custom_collection.listCustomCollections", "connection_error", err)
 		return nil, err
 	}
 
 	customCols, err := conn.CustomCollection.List(nil)
 	if err != nil {
-		plugin.Logger(ctx).Error("listCustomCollections", "list_api_error", err)
+		plugin.Logger(ctx).Error("shopify_custom_collection.listCustomCollections", "api_error", err)
 		return nil, err
 	}
 
@@ -125,38 +125,42 @@ func listCustomCollections(ctx context.Context, d *plugin.QueryData, _ *plugin.H
 // HYDRATE FUNCTIONS
 
 func getCustomCollection(ctx context.Context, d *plugin.QueryData, h *plugin.HydrateData) (interface{}, error) {
-	conn, err := connect(ctx, d)
-	if err != nil {
-		plugin.Logger(ctx).Error("getCustomCollection", "connection_error", err)
-		return nil, err
-	}
+
 	id := d.EqualsQuals["id"].GetInt64Value()
 
 	// check if the id is empty
 	if id == 0 {
 		return nil, nil
 	}
-	result, err := conn.CustomCollection.Get(id, nil)
+
+	conn, err := connect(ctx, d)
 	if err != nil {
-		plugin.Logger(ctx).Error("getCustomCollection", "api_error", err)
+		plugin.Logger(ctx).Error("shopify_custom_collection.getCustomCollection", "connection_error", err)
 		return nil, err
 	}
 
-	return result, nil
+	result, err := conn.CustomCollection.Get(id, nil)
+	if err != nil {
+		plugin.Logger(ctx).Error("shopify_custom_collection.getCustomCollection", "api_error", err)
+		return nil, err
+	}
+
+	return *result, nil
 }
 
 func listCustomCollectionMetafields(ctx context.Context, d *plugin.QueryData, h *plugin.HydrateData) (interface{}, error) {
+
 	id := h.Item.(goshopify.CustomCollection).ID
 
 	conn, err := connect(ctx, d)
 	if err != nil {
-		plugin.Logger(ctx).Error("listCustomCollectionMetafields", "connection_error", err)
+		plugin.Logger(ctx).Error("shopify_custom_collection.listCustomCollectionMetafields", "connection_error", err)
 		return nil, err
 	}
 
 	meta, err := conn.CustomCollection.ListMetafields(id, nil)
 	if err != nil {
-		plugin.Logger(ctx).Error("listCustomCollectionMetafields", "list_api_error", err)
+		plugin.Logger(ctx).Error("shopify_custom_collection.listCustomCollectionMetafields", "api_error", err)
 		return nil, err
 	}
 

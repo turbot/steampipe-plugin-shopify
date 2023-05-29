@@ -101,7 +101,7 @@ func tableShopifySmartCollection(ctx context.Context) *plugin.Table {
 				Name:        "title",
 				Type:        proto.ColumnType_STRING,
 				Description: "Title of the resource.",
-				Transform:   transform.FromField("id"),
+				Transform:   transform.FromField("Title"),
 			},
 		},
 	}
@@ -110,13 +110,13 @@ func tableShopifySmartCollection(ctx context.Context) *plugin.Table {
 func listSmartCollections(ctx context.Context, d *plugin.QueryData, _ *plugin.HydrateData) (interface{}, error) {
 	conn, err := connect(ctx, d)
 	if err != nil {
-		plugin.Logger(ctx).Error("listSmartCollections", "connection_error", err)
+		plugin.Logger(ctx).Error("shopify_smart_collection.listSmartCollections", "connection_error", err)
 		return nil, err
 	}
 
 	smartCols, err := conn.SmartCollection.List(nil)
 	if err != nil {
-		plugin.Logger(ctx).Error("listSmartCollections", "list_api_error", err)
+		plugin.Logger(ctx).Error("shopify_smart_collection.listSmartCollections", "api_error", err)
 		return nil, err
 	}
 
@@ -134,20 +134,23 @@ func listSmartCollections(ctx context.Context, d *plugin.QueryData, _ *plugin.Hy
 // HYDRATE FUNCTIONS
 
 func getSmartCollection(ctx context.Context, d *plugin.QueryData, h *plugin.HydrateData) (interface{}, error) {
-	conn, err := connect(ctx, d)
-	if err != nil {
-		plugin.Logger(ctx).Error("getSmartCollection", "connection_error", err)
-		return nil, err
-	}
+
 	id := d.EqualsQuals["id"].GetInt64Value()
 
 	// check if the id is empty
 	if id == 0 {
 		return nil, nil
 	}
+
+	conn, err := connect(ctx, d)
+	if err != nil {
+		plugin.Logger(ctx).Error("shopify_smart_collection.getSmartCollection", "connection_error", err)
+		return nil, err
+	}
+
 	result, err := conn.SmartCollection.Get(id, nil)
 	if err != nil {
-		plugin.Logger(ctx).Error("getSmartCollection", "api_error", err)
+		plugin.Logger(ctx).Error("shopify_smart_collection.getSmartCollection", "api_error", err)
 		return nil, err
 	}
 
@@ -155,17 +158,18 @@ func getSmartCollection(ctx context.Context, d *plugin.QueryData, h *plugin.Hydr
 }
 
 func listSmartCollectionMetafields(ctx context.Context, d *plugin.QueryData, h *plugin.HydrateData) (interface{}, error) {
+
 	id := h.Item.(goshopify.SmartCollection).ID
 
 	conn, err := connect(ctx, d)
 	if err != nil {
-		plugin.Logger(ctx).Error("listSmartCollectionMetafields", "connection_error", err)
+		plugin.Logger(ctx).Error("shopify_smart_collection.listSmartCollectionMetafields", "connection_error", err)
 		return nil, err
 	}
 
 	meta, err := conn.SmartCollection.ListMetafields(id, nil)
 	if err != nil {
-		plugin.Logger(ctx).Error("listSmartCollectionMetafields", "list_api_error", err)
+		plugin.Logger(ctx).Error("shopify_smart_collection.listSmartCollectionMetafields", "api_error", err)
 		return nil, err
 	}
 
