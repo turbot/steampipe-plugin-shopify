@@ -60,7 +60,7 @@ steampipe plugin install shopify
 
 | Item        | Description                                                                                                                                                                                           |
 | ----------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Credentials | Shopify requires a `shop name` and an [api_token](https://shopify.dev/docs/apps/auth/admin-app-access-tokens) for all requests.                                                                |
+| Credentials | Shopify requires a `Shop name` and an [API token](https://shopify.dev/docs/apps/auth/admin-app-access-tokens) for all requests.                                                                |
 | Permissions | API tokens have the same permissions as the user who creates them, and if the user permissions change, the token permissions also change.                                                         |
 | Radius      | Each connection represents a single Shopify Installation.                                                                                                                                           |
 | Resolution  | 1. Credentials explicitly set in a steampipe config file (`~/.steampipe/config/shopify.spc`)<br />2. Credentials specified in environment variables, e.g., `SHOPIFY_API_TOKEN`, `SHOPIFY_SHOP_NAME`. |
