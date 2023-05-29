@@ -12,12 +12,12 @@ import (
 )
 
 type shopifyConfig struct {
-	Token    *string `cty:"token"`
+	APIToken *string `cty:"api_token"`
 	ShopName *string `cty:"shop_name"`
 }
 
 var ConfigSchema = map[string]*schema.Attribute{
-	"token": {
+	"api_token": {
 		Type: schema.TypeString,
 	},
 	"shop_name": {
@@ -46,30 +46,30 @@ func connect(_ context.Context, d *plugin.QueryData) (*goshopify.Client, error) 
 	}
 
 	// Default to env var settings
-	token := os.Getenv("SHOPIFY_API_TOKEN")
+	apiToken := os.Getenv("SHOPIFY_API_TOKEN")
 	shopName := os.Getenv("SHOPIFY_SHOP_NAME")
 
 	// Prefer config settings
 	shopifyConfig := GetConfig(d.Connection)
-	if shopifyConfig.Token != nil {
-		token = *shopifyConfig.Token
+	if shopifyConfig.APIToken != nil {
+		apiToken = *shopifyConfig.APIToken
 	}
 	if shopifyConfig.ShopName != nil {
 		shopName = *shopifyConfig.ShopName
 	}
 
 	// Error if the minimum config is not set
-	if token == "" {
-		return nil, errors.New("'token' must be set in the connection configuration. Edit your connection configuration file and then restart Steampipe")
+	if apiToken == "" {
+		return nil, errors.New("'api_token' must be set in the connection configuration. Edit your connection configuration file and then restart Steampipe")
 	}
 	if shopName == "" {
 		return nil, errors.New("'shop_name' must be set in the connection configuration. Edit your connection configuration file and then restart Steampipe")
 	}
 
 	// Currently we don't need to specify the API Key/API Secret Key, to create the
-	// conn, just the API token is enough to fetch the data(for the initial tables).
+	// conn, just the API api_token is enough to fetch the data(for the initial tables).
 	// TODO: Look into if we need to use keys/secret keys in the future.
-	conn := goshopify.NewClient(goshopify.App{}, shopName, token)
+	conn := goshopify.NewClient(goshopify.App{}, shopName, apiToken)
 
 	return conn, nil
 }

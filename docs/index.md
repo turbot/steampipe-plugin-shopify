@@ -60,8 +60,8 @@ steampipe plugin install shopify
 
 | Item        | Description                                                                                                                                                                                           |
 | ----------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Credentials | Shopify requires a `shop name` and a [token](https://shopify.dev/docs/apps/auth/admin-app-access-tokens) for all requests.                                                                |
-| Permissions | Tokens have the same permissions as the user who creates them, and if the user permissions change, the token permissions also change.                                                         |
+| Credentials | Shopify requires a `shop name` and an [api_token](https://shopify.dev/docs/apps/auth/admin-app-access-tokens) for all requests.                                                                |
+| Permissions | API tokens have the same permissions as the user who creates them, and if the user permissions change, the token permissions also change.                                                         |
 | Radius      | Each connection represents a single Shopify Installation.                                                                                                                                           |
 | Resolution  | 1. Credentials explicitly set in a steampipe config file (`~/.steampipe/config/shopify.spc`)<br />2. Credentials specified in environment variables, e.g., `SHOPIFY_SHOP_NAME`, `SHOPIFY_API_TOKEN`. |
 
@@ -75,18 +75,18 @@ Configure your account details in `~/.steampipe/config/shopify.spc`:
 connection "shopify" {
   plugin = "shopify"
 
-  # API access token to request data from the Admin API. e.g., `shpat_ab0a4zaa19c3faketoken924176b387d`.
+  # `api_token`: API access token to request data from the Admin API. e.g., `shpat_ab0a4zaa19c3faketoken924176b387d`.
   # Please see https://www.shopify.com/partners/blog/17056443-how-to-generate-a-shopify-api-token for more information.
   # Can also be set with the SHOPIFY_API_TOKEN environment variable.
-  # token = "shpat_ab0a4zaa19c3faketoken924176b387d"
+  # api_token = "shpat_ab0a4zaa19c3faketoken924176b387d"
 
-  # The shop_name parameter is the shop's myshopify domain, e.g. "theshop.myshopify.com", or simply "theshop".
+  # `shop_name`: The shop_name parameter is the shop's myshopify domain, e.g. "theshop.myshopify.com", or simply "theshop".
   # Can also be set with the SHOPIFY_SHOP_NAME environment variable.
   # shop_name = "theshop"
 }
 ```
 
-Alternatively, you can also use the standard Shopify environment variables to obtain credentials **only if other arguments (`shop_name ` and `token `) are not specified** in the connection:
+Alternatively, you can also use the standard Shopify environment variables to obtain credentials **only if other arguments (`shop_name ` and `api_token `) are not specified** in the connection:
 
 ```sh
 export SHOPIFY_SHOP_NAME=theshop

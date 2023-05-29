@@ -28,16 +28,16 @@ connection "shopify" {
   plugin = "shopify"
 
   # Authentication information
+  api_token = "shpat_ab0a4zaa19c3faketoken924176b387d"
   shop_name = "myshop"
-  token = "shpat_ab0a4zaa19c3faketoken924176b387d"
 }
 ```
 
 Or through environment variables:
 
 ```sh
-export SHOPIFY_SHOP_NAME=theshop
 export SHOPIFY_API_TOKEN=shpat_ab0a4zaa19c3faketoken924176b387d
+export SHOPIFY_SHOP_NAME=theshop
 ```
 
 Run steampipe:
