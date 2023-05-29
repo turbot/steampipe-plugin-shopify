@@ -4,7 +4,8 @@ go 1.19
 
 require (
 	github.com/bold-commerce/go-shopify/v3 v3.14.0
-	github.com/turbot/steampipe-plugin-sdk/v5 v5.3.0
+	github.com/shopspring/decimal v0.0.0-20200105231215-408a2507e114
+	github.com/turbot/steampipe-plugin-sdk/v5 v5.4.1
 )
 
 require (
@@ -71,7 +72,6 @@ require (
 	github.com/prometheus/procfs v0.8.0 // indirect
 	github.com/rivo/uniseg v0.2.0 // indirect
 	github.com/sethvargo/go-retry v0.2.4 // indirect
-	github.com/shopspring/decimal v0.0.0-20200105231215-408a2507e114 // indirect
 	github.com/sirupsen/logrus v1.9.0 // indirect
 	github.com/spf13/cast v1.5.0 // indirect
 	github.com/stevenle/topsort v0.0.0-20130922064739-8130c1d7596b // indirect

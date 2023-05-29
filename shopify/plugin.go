@@ -13,13 +13,25 @@ func Plugin(ctx context.Context) *plugin.Plugin {
 		Name:             "steampipe-plugin-shopify",
 		DefaultTransform: transform.FromCamel(),
 		DefaultGetConfig: &plugin.GetConfig{
-			IgnoreConfig: &plugin.IgnoreConfig{},
+			IgnoreConfig: &plugin.IgnoreConfig{
+				ShouldIgnoreErrorFunc: isNotFoundError([]string{"Not Found"}),
+			},
 		},
 		ConnectionConfigSchema: &plugin.ConnectionConfigSchema{
 			NewInstance: ConfigInstance,
 			Schema:      ConfigSchema,
 		},
-		TableMap: map[string]*plugin.Table{},
+		TableMap: map[string]*plugin.Table{
+			"shopify_collection_product": tableShopifyCollectionProduct(ctx),
+			"shopify_custom_collection":  tableShopifyCustomCollection(ctx),
+			"shopify_customer":           tableShopifyCustomer(ctx),
+			"shopify_draft_order":        tableShopifyDraftOrder(ctx),
+			"shopify_order":              tableShopifyOrder(ctx),
+			"shopify_product":            tableShopifyProduct(ctx),
+			"shopify_product_variant":    tableShopifyProductVariant(ctx),
+			"shopify_smart_collection":   tableShopifySmartCollection(ctx),
+			"shopify_theme":              tableShopifyTheme(ctx),
+		},
 	}
 	return p
 }

@@ -1,9 +1,10 @@
 ---
 name: Feature request - New table
 about: Suggest a new table for this project
-title: Add table shopify_<resource>
+title: Add table shopify_<service>_<resource>
 labels: enhancement, new table
-assignees: ""
+assignees: ''
+
 ---
 
 **References**
