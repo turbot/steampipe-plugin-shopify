@@ -384,6 +384,8 @@ func listOrders(ctx context.Context, d *plugin.QueryData, _ *plugin.HydrateData)
 	if limit != nil {
 		if *limit < 250 {
 			options.ListOptions.Limit = int(*limit)
+		} else {
+			options.ListOptions.Limit = 250
 		}
 	}
 
