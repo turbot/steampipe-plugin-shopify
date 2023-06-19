@@ -201,6 +201,8 @@ func listCollectionProducts(ctx context.Context, d *plugin.QueryData, h *plugin.
 	if limit != nil {
 		if *limit < 250 {
 			options.Limit = int(*limit)
+		} else {
+			options.Limit = 250
 		}
 	}
 
