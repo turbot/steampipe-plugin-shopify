@@ -155,6 +155,8 @@ func listCustomers(ctx context.Context, d *plugin.QueryData, _ *plugin.HydrateDa
 	if limit != nil {
 		if *limit < 250 {
 			options.Limit = int(*limit)
+		} else {
+			options.Limit = 250
 		}
 	}
 

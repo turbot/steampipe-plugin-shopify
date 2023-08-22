@@ -372,19 +372,23 @@ func listOrders(ctx context.Context, d *plugin.QueryData, _ *plugin.HydrateData)
 		return nil, err
 	}
 
-	// max limit defined by the api is 250
-	// We are setting status to 'any' to get all the orders(open, closed, cancelled)
+	// max limit defined by the API is 250
+	// We have removed "Status" as an input parameter since the API ListWithPagination doesn't correctly return results with it
+	// This API now returns only open shopify orders
 	options := goshopify.OrderListOptions{
 		ListOptions: goshopify.ListOptions{},
-		Status:      "any",
+		// Status:      "any",
 	}
 
+	maxLimit := int64(250)
 	// set the limit if a lower limit is passed in query context
 	limit := d.QueryContext.Limit
 	if limit != nil {
-		if *limit < 250 {
+		if *limit < maxLimit {
 			options.ListOptions.Limit = int(*limit)
 		}
+	} else {
+		options.ListOptions.Limit = int(maxLimit)
 	}
 
 	for {
