@@ -8,6 +8,7 @@ short_name: "shopify"
 description: "Steampipe plugin to query products, order, customers and more from Shopify."
 og_description: "Query Shopify with SQL! Open source CLI. No DB required."
 og_image: "/images/plugins/turbot/shopify-social-graphic.png"
+engines: ["steampipe", "sqlite", "postgres", "export"]
 ---
 
 # Shopify + Steampipe
