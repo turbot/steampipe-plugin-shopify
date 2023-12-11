@@ -94,7 +94,4 @@ export SHOPIFY_API_TOKEN=shpat_ab0a4zaa19c3faketoken924176b387d
 export SHOPIFY_SHOP_NAME=theshop
 ```
 
-## Get involved
-
-- Open source: https://github.com/turbot/steampipe-plugin-shopify
-- Community: [Join #steampipe on Slack →](https://turbot.com/community/join)
+)
