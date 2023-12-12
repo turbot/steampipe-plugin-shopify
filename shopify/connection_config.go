@@ -8,21 +8,11 @@ import (
 	goshopify "github.com/bold-commerce/go-shopify/v3"
 
 	"github.com/turbot/steampipe-plugin-sdk/v5/plugin"
-	"github.com/turbot/steampipe-plugin-sdk/v5/plugin/schema"
 )
 
 type shopifyConfig struct {
-	APIToken *string `cty:"api_token"`
-	ShopName *string `cty:"shop_name"`
-}
-
-var ConfigSchema = map[string]*schema.Attribute{
-	"api_token": {
-		Type: schema.TypeString,
-	},
-	"shop_name": {
-		Type: schema.TypeString,
-	},
+	APIToken *string `hcl:"api_token"`
+	ShopName *string `hcl:"shop_name"`
 }
 
 func ConfigInstance() interface{} {
