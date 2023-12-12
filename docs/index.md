@@ -15,7 +15,7 @@ engines: ["steampipe", "sqlite", "postgres", "export"]
 
 [Shopify](https://shopify.com/) is an e-commerce platform that allows businesses to create and manage online stores.
 
-[Steampipe](https://steampipe.io) is an open source CLI to instantly query cloud APIs using SQL.
+[Steampipe](https://steampipe.io) is an open-source zero-ETL engine to instantly query cloud APIs using SQL.
 
 List Shopify order details:
 
