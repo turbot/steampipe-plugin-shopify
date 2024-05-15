@@ -20,6 +20,12 @@ func Plugin(ctx context.Context) *plugin.Plugin {
 		ConnectionConfigSchema: &plugin.ConnectionConfigSchema{
 			NewInstance: ConfigInstance,
 		},
+		ConnectionKeyColumns: []plugin.ConnectionKeyColumn{
+			{
+				Name:    "shop_name",
+				Hydrate: getShopName,
+			},
+		},
 		TableMap: map[string]*plugin.Table{
 			"shopify_collection_product": tableShopifyCollectionProduct(ctx),
 			"shopify_custom_collection":  tableShopifyCustomCollection(ctx),

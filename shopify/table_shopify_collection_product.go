@@ -27,7 +27,7 @@ func tableShopifyCollectionProduct(ctx context.Context) *plugin.Table {
 			ParentHydrate: listCollections,
 			Hydrate:       listCollectionProducts,
 		},
-		Columns: []*plugin.Column{
+		Columns: commonColumns([]*plugin.Column{
 			{
 				Name:        "collection_id",
 				Type:        proto.ColumnType_INT,
@@ -143,7 +143,7 @@ func tableShopifyCollectionProduct(ctx context.Context) *plugin.Table {
 				Description: "Title of the resource.",
 				Transform:   transform.FromField("Product.Title"),
 			},
-		},
+		}),
 	}
 }
 

@@ -20,7 +20,7 @@ func tableShopifyCustomer(ctx context.Context) *plugin.Table {
 		List: &plugin.ListConfig{
 			Hydrate: listCustomers,
 		},
-		Columns: []*plugin.Column{
+		Columns: commonColumns([]*plugin.Column{
 			{
 				Name:        "id",
 				Type:        proto.ColumnType_INT,
@@ -137,7 +137,7 @@ func tableShopifyCustomer(ctx context.Context) *plugin.Table {
 				Description: "Title of the resource.",
 				Transform:   transform.FromField("Email"),
 			},
-		},
+		}),
 	}
 }
 
