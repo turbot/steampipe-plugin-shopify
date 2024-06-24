@@ -19,7 +19,7 @@ func tableShopifyTheme(ctx context.Context) *plugin.Table {
 		List: &plugin.ListConfig{
 			Hydrate: listThemes,
 		},
-		Columns: []*plugin.Column{
+		Columns: commonColumns([]*plugin.Column{
 			{
 				Name:        "id",
 				Type:        proto.ColumnType_INT,
@@ -75,7 +75,7 @@ func tableShopifyTheme(ctx context.Context) *plugin.Table {
 				Description: "Title of the resource.",
 				Transform:   transform.FromField("Name"),
 			},
-		},
+		}),
 	}
 }
 
