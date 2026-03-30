@@ -6,7 +6,7 @@ toolchain go1.24.1
 
 require (
 	github.com/bold-commerce/go-shopify/v3 v3.14.0
-	github.com/shopspring/decimal v0.0.0-20200105231215-408a2507e114
+	github.com/shopspring/decimal v1.4.0
 	github.com/turbot/steampipe-plugin-sdk/v5 v5.13.1
 )
 
