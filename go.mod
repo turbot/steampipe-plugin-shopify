@@ -3,7 +3,7 @@ module github.com/turbot/steampipe-plugin-shopify
 go 1.26.0
 
 require (
-	github.com/bold-commerce/go-shopify/v3 v3.14.0
+	github.com/bold-commerce/go-shopify/v3 v3.17.0
 	github.com/shopspring/decimal v0.0.0-20200105231215-408a2507e114
 	github.com/turbot/steampipe-plugin-sdk/v5 v5.14.0
 )
