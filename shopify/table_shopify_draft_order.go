@@ -3,9 +3,9 @@ package shopify
 import (
 	"context"
 
-	"github.com/turbot/steampipe-plugin-sdk/v5/grpc/proto"
-	"github.com/turbot/steampipe-plugin-sdk/v5/plugin"
-	"github.com/turbot/steampipe-plugin-sdk/v5/plugin/transform"
+	"github.com/turbot/steampipe-plugin-sdk/v6/grpc/proto"
+	"github.com/turbot/steampipe-plugin-sdk/v6/plugin"
+	"github.com/turbot/steampipe-plugin-sdk/v6/plugin/transform"
 )
 
 func tableShopifyDraftOrder(ctx context.Context) *plugin.Table {
@@ -19,7 +19,7 @@ func tableShopifyDraftOrder(ctx context.Context) *plugin.Table {
 		List: &plugin.ListConfig{
 			Hydrate: listDraftOrders,
 		},
-		Columns:commonColumns([]*plugin.Column{
+		Columns: commonColumns([]*plugin.Column{
 			{
 				Name:        "id",
 				Type:        proto.ColumnType_INT,

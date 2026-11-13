@@ -7,7 +7,7 @@ import (
 
 	goshopify "github.com/bold-commerce/go-shopify/v3"
 
-	"github.com/turbot/steampipe-plugin-sdk/v5/plugin"
+	"github.com/turbot/steampipe-plugin-sdk/v6/plugin"
 )
 
 type shopifyConfig struct {
@@ -21,17 +21,17 @@ func ConfigInstance() interface{} {
 
 // GetConfig :: retrieve and cast connection config from query data
 func GetConfig(connection *plugin.Connection) shopifyConfig {
-	if connection == nil || connection.Config == nil {
+	if connection == nil || connection.GetConfig() == nil {
 		return shopifyConfig{}
 	}
-	config, _ := connection.Config.(shopifyConfig)
+	config, _ := connection.GetConfig().(shopifyConfig)
 	return config
 }
 
-func connect(_ context.Context, d *plugin.QueryData) (*goshopify.Client, error) {
+func connect(ctx context.Context, d *plugin.QueryData) (*goshopify.Client, error) {
 	// Load connection from cache, which preserves throttling protection etc
 	cacheKey := "shopify"
-	if cachedData, ok := d.ConnectionManager.Cache.Get(cacheKey); ok {
+	if cachedData, ok := d.ConnectionCache.Get(ctx, cacheKey); ok {
 		return cachedData.(*goshopify.Client), nil
 	}
 
