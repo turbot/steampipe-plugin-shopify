@@ -4,8 +4,9 @@ import (
 	"context"
 
 	"github.com/shopspring/decimal"
-	"github.com/turbot/steampipe-plugin-sdk/v5/plugin/transform"
+	"github.com/turbot/steampipe-plugin-sdk/v6/plugin/transform"
 )
+
 func convertPrice(_ context.Context, d *transform.TransformData) (interface{}, error) {
 	if d.Value == nil {
 		return nil, nil

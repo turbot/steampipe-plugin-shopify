@@ -4,9 +4,9 @@ import (
 	"context"
 
 	goshopify "github.com/bold-commerce/go-shopify/v3"
-	"github.com/turbot/steampipe-plugin-sdk/v5/grpc/proto"
-	"github.com/turbot/steampipe-plugin-sdk/v5/plugin"
-	"github.com/turbot/steampipe-plugin-sdk/v5/plugin/transform"
+	"github.com/turbot/steampipe-plugin-sdk/v6/grpc/proto"
+	"github.com/turbot/steampipe-plugin-sdk/v6/plugin"
+	"github.com/turbot/steampipe-plugin-sdk/v6/plugin/transform"
 )
 
 func tableShopifyOrder(ctx context.Context) *plugin.Table {
@@ -385,10 +385,10 @@ func listOrders(ctx context.Context, d *plugin.QueryData, _ *plugin.HydrateData)
 	limit := d.QueryContext.Limit
 	if limit != nil {
 		if *limit < maxLimit {
-			options.ListOptions.Limit = int(*limit)
+			options.Limit = int(*limit)
 		}
 	} else {
-		options.ListOptions.Limit = int(maxLimit)
+		options.Limit = int(maxLimit)
 	}
 
 	for {
@@ -409,7 +409,7 @@ func listOrders(ctx context.Context, d *plugin.QueryData, _ *plugin.HydrateData)
 		if paginator.NextPageOptions == nil {
 			return nil, nil
 		}
-		options.ListOptions.PageInfo = paginator.NextPageOptions.PageInfo
+		options.PageInfo = paginator.NextPageOptions.PageInfo
 	}
 }
 
